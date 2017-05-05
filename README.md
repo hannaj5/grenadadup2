@@ -6,3 +6,5 @@ This is really just here to save a couple steps with using Cloud 9, Rails and Gi
 # Usage
 
 When starting a new Cloud 9 Rails project, just add ```git@github.com:olendorf/rails_starter.git``` in the **Clone from Git or Mercurial URL ** box. 
+
+**NOTE: ** This will mean your README has this documentation. So delete this text and add your own.
