@@ -1,28 +1,8 @@
-<<<<<<< HEAD
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+# Rails Starter
 
+This is really just here to save a couple steps with using Cloud 9, Rails and Github. I like the Github Licensing and .gitignore and I like the Cloud 9 setup  otherwise. This just combines the two.
 
-Welcome to your Rails project on Cloud9 IDE!
+# Usage
 
-To get started, just do the following:
-
-1. Run the project with the "Run Project" button in the menu bar on top of the IDE.
-2. Preview your new app by clicking on the URL that appears in the Run panel below (https://rails-starter-rob-0.c9users.io/).
-
-Happy coding!
-The Cloud9 IDE team
-
-
-## Support & Documentation
-
-Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE. 
-To watch some training videos, visit http://www.youtube.com/user/c9ide
-=======
-# rails_starter
->>>>>>> c7445d1a2dee97b5c15a2dfb6273b3e66eceffae
+When starting a new Cloud 9 Rails project, just add ```git@github.com:olendorf/rails_starter.git``` in the **Clone from Git or Mercurial URL ** box. 
