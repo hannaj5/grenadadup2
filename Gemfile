@@ -27,6 +27,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Authentication 
 gem 'devise'
 
+# Active admin easy web pages
+gem 'activeadmin'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
