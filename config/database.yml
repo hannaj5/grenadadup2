@@ -1,27 +1,27 @@
- ##
-    # Allow more secure way of handling credentials as environmental variables
-    #
-    # $ echo "export USERNAME=username" >> ~/.profile
-    #
-    # $ echo "export PASSWORD=password" >> ~/.profile
+##
+# Allow more secure way of handling credentials as environmental variables
+#
+# $ echo "export USERNAME=username" >> ~/.profile
+#
+# $ echo "export PASSWORD=password" >> ~/.profile
 
-    # database.yml
-    default: &default
-          adapter: postgresql
-          encoding: unicode
-          pool: 5
-          username: <%= ENV['USERNAME'] %>
-          password: <%= ENV['PASSWORD'] %>
-          host:     <%= ENV['IP'] %>
+# database.yml
+default: &default
+      adapter: postgresql
+      encoding: unicode
+      pool: 5
+      username: <%= ENV['USERNAME'] %>
+      password: <%= ENV['PASSWORD'] %>
+      host:     <%= ENV['IP'] %>
 
-    development:
-      <<: *default
-      database: grendada_database_development
+development:
+  <<: *default
+  database: grendada_database_development
 
-    test:
-      <<: *default
-      database: grendada_database_test
+test:
+  <<: *default
+  database: grendada_database_test
 
-    production:
-      <<: *default
-      database: grendada_database_production
+production:
+  <<: *default
+  database: grendada_database_production
