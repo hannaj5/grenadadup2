@@ -1,13 +1,13 @@
 ActiveAdmin.register User do
-    permit_params :email, :role
-    form do |f|
-        f.semantic_errors
-        f.inputs do
-            input :email
-            input :role
-        end
-        f.actions
+  permit_params :email, :role
+  form do |f|
+    f.semantic_errors
+    f.inputs do
+      input :email
+      input :role
     end
+    f.actions
+  end
 end
 
 #   t.string   "email",                  default: "", null: false
@@ -22,4 +22,4 @@ end
 #     t.inet     "last_sign_in_ip"
 #     t.datetime "created_at",                          null: false
 #     t.datetime "updated_at",                          null: false
-#     t.integer  "role",   
+#     t.integer  "role",

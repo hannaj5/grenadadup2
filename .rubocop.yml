@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'spec/*_helper.rb'
+    - 'spec/support/database_cleaner.rb'
+    - 'Gemfile*'
