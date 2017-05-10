@@ -1,3 +1,9 @@
+# frozen_string_literal: true
+
+# Base model to store information about archeological sites.
 class ArcheologicalSite < ActiveRecord::Base
-    has_many :ceramic_typologies
+  has_and_belongs_to_many :ceramic_types
+  has_and_belongs_to_many :ceramic_diagnostics
+  has_and_belongs_to_many :previous_work
+  has_and_belongs_to_many :threats
 end

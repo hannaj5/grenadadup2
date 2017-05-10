@@ -13,11 +13,11 @@ class CreateArcheologicalSites < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    
+
     add_index :archeological_sites, :site_number
     add_index :archeological_sites, :site_name
     add_index :archeological_sites, :parish
-    add_index :archeological_sites, :location_description 
+    add_index :archeological_sites, :location_description
     add_index :archeological_sites, :recommendations
     add_index :archeological_sites, :summary
     add_index :archeological_sites, :notes
