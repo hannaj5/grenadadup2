@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505194719) do
+ActiveRecord::Schema.define(version: 20170510172211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,28 @@ ActiveRecord::Schema.define(version: 20170505194719) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "archeological_sites", force: :cascade do |t|
+    t.string   "site_number"
+    t.string   "site_name"
+    t.string   "parish"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.text     "location_description"
+    t.text     "recommendations"
+    t.text     "summary"
+    t.text     "notes"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "archeological_sites", ["location_description"], name: "index_archeological_sites_on_location_description", using: :btree
+  add_index "archeological_sites", ["notes"], name: "index_archeological_sites_on_notes", using: :btree
+  add_index "archeological_sites", ["parish"], name: "index_archeological_sites_on_parish", using: :btree
+  add_index "archeological_sites", ["recommendations"], name: "index_archeological_sites_on_recommendations", using: :btree
+  add_index "archeological_sites", ["site_name"], name: "index_archeological_sites_on_site_name", using: :btree
+  add_index "archeological_sites", ["site_number"], name: "index_archeological_sites_on_site_number", using: :btree
+  add_index "archeological_sites", ["summary"], name: "index_archeological_sites_on_summary", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
