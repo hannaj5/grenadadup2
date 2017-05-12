@@ -5,6 +5,9 @@ RSpec.describe ArcheologicalSite, type: :model do
   it { should have_and_belong_to_many(:ceramic_diagnostics) }
   it { should have_and_belong_to_many(:previous_work) }
   it { should have_and_belong_to_many(:threats) }
+  
+  it { should have_many :maps }
+  it { should have_many :generic_files }
 
   it { should respond_to :site_number }
   it { should respond_to :site_name }
