@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+  menu :if => proc{ current_user.can_be_admin? }
   permit_params :email, :role
   form do |f|
     f.semantic_errors
@@ -7,6 +8,15 @@ ActiveAdmin.register User do
       input :role
     end
     f.actions
+  end
+  
+  controller do
+    
+    # Gives us authenticate_user_access! method
+    include ActiveAdmin::AccessControl
+    
+    before_action -> { authenticate_user_access!(:admin) }
+
   end
 end
 
