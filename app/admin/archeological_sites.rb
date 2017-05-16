@@ -2,7 +2,11 @@ ActiveAdmin.register ArcheologicalSite do
   
   permit_params :site_number, :site_name, :parish, :latitude, :longitude,
                 :location_description, :recommendations, :summary, :notes,
-                :references
+                :references, ceramic_type_ids: [], ceramic_diagnostic_ids: [],
+                threat_ids: [], previous_work_ids: []
+                
+  # Invoke the decorator for the class
+  decorate_with ArcheologicalSiteDecorator
                 
   index do
     selectable_column
@@ -14,6 +18,18 @@ ActiveAdmin.register ArcheologicalSite do
     column :latitude if current_user && current_user.can_be_user?
     column :longitude if current_user && current_user.can_be_user?
     column 'Description', :location_description
+    column 'Ceramic Types' do |site|
+      site.ceramic_types_to_s
+    end
+    column 'Ceramic Diagnostics' do |site|
+      site.ceramic_diagnostics_to_s
+    end
+    column 'Threats' do |site|
+      site.threats_to_s
+    end
+    column 'Other Work' do |site|
+      site.previous_work_to_s
+    end
     column :summary
     column :notes
     column :references
@@ -34,16 +50,20 @@ ActiveAdmin.register ArcheologicalSite do
     f.semantic_errors
     f.actions
     f.inputs 'Archeological Site' do
-      input :site_number, label: 'Identifier'
-      input :site_name, label: 'Name'
-      input :parish
-      input :latitude
-      input :longitude
-      input :location_description, label: 'Description'
-      input :recommendations
-      input :summary
-      input :notes
-      input :references
+      f.input :site_number, label: 'Identifier'
+      f.input :site_name, label: 'Name'
+      f.input :parish
+      f.input :latitude
+      f.input :longitude    
+      f.input :ceramic_types, as: :check_boxes
+      f.input :ceramic_diagnostics, as: :check_boxes
+      f.input :threats, as: :check_boxes
+      f.input :previous_work, as: :select, input_html: {multiple: true}
+      f.input :location_description, label: 'Description'
+      f.input :recommendations
+      f.input :summary
+      f.input :notes
+      f.input :references
     end
     f.actions
   end

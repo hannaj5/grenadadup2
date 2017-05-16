@@ -23,6 +23,9 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Decorator pattern gem
+gem 'draper'
+
 # Authentication
 gem 'devise'
 
@@ -47,6 +50,7 @@ gem 'mini_magick'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Ruby style checker
 gem 'rubocop', require: false
 
 group :test do
