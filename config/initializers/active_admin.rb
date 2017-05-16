@@ -54,7 +54,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # within the application controller.
-  config.authentication_method = :authenticate_user!
+  # config.authentication_method = :authenticate_user!
 
   # == User Authorization
   #
@@ -119,7 +119,7 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  # config.comments = false
+  config.comments = false
   #
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
@@ -221,6 +221,14 @@ ActiveAdmin.setup do |config|
   #       admin.add_logout_button_to_menu menu
   #     end
   #   end
+  
+  config.namespace :admin do |admin|
+    admin.build_menu :utility_navigation do |menu|
+      menu.add label: "Login", url: ' /users/sign_in'
+      admin.add_current_user_to_menu  menu
+      admin.add_logout_button_to_menu menu
+    end
+  end
   #
   # If you wanted to add a static menu item to the default menu provided:
   #
