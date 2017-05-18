@@ -27,8 +27,8 @@ ActiveAdmin.register ArcheologicalSite do
     column 'Threats' do |site|
       site.threats_to_s
     end
-    column 'Other Work' do |site|
-      site.previous_work_to_s
+    column 'Previous Work' do |site|
+      site.previous_works_to_s
     end
     column :summary
     column :notes
@@ -41,6 +41,10 @@ ActiveAdmin.register ArcheologicalSite do
   filter :latitude
   filter :longitude
   filter :location_description, label: 'Description'
+  filter :ceramic_types, as: :check_boxes
+  filter :ceramic_diagnostics, as: :check_boxes
+  filter :previous_works, as: :check_boxes
+  filter :threats, as: :check_boxes
   filter :summary
   filter :notes
   filter :references
@@ -58,7 +62,7 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :ceramic_types, as: :check_boxes
       f.input :ceramic_diagnostics, as: :check_boxes
       f.input :threats, as: :check_boxes
-      f.input :previous_work, as: :select, input_html: {multiple: true}
+      f.input :previous_works, as: :select, input_html: {multiple: true}
       f.input :location_description, label: 'Description'
       f.input :recommendations
       f.input :summary
