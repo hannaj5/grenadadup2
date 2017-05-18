@@ -17,5 +17,8 @@ class ArcheologicalSite < ActiveRecord::Base
   
   has_many :maps
   has_many :generic_files
+  
+  accepts_nested_attributes_for :maps
+  accepts_nested_attributes_for :generic_files
 
 end
