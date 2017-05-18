@@ -14,8 +14,8 @@ class ArcheologicalSiteDecorator < Draper::Decorator
     self.threats.collect { |threat| threat.name }.join(' | <br/>').html_safe
   end
   
-  def previous_work_to_s
-    self.previous_work.collect { |work| work.name }.join(' | <br/>').html_safe
+  def previous_works_to_s
+    self.previous_works.collect { |work| work.name }.join(' | <br/>').html_safe
   end
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

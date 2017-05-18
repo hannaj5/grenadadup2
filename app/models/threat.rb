@@ -2,5 +2,6 @@
 
 # Used by ArcheologicalSites
 class Threat < ActiveRecord::Base
-  has_and_belongs_to_many :archeological_sites
+  has_many :archeological_sites_threats
+  has_many :archeological_sites, through: :archeological_sites_threats
 end

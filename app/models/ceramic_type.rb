@@ -2,5 +2,6 @@
 
 # Ceramic Types used by ArcheologicalSite
 class CeramicType < ActiveRecord::Base
-  has_and_belongs_to_many :archeological_sites
+  has_many :archeological_sites_ceramic_types
+  has_many :archeological_sites, through: :archeological_sites_ceramic_types
 end

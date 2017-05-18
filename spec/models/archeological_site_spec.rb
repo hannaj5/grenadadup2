@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ArcheologicalSite, type: :model do
-  it { should have_and_belong_to_many(:ceramic_types) }
-  it { should have_and_belong_to_many(:ceramic_diagnostics) }
-  it { should have_and_belong_to_many(:previous_work) }
-  it { should have_and_belong_to_many(:threats) }
+  it { should have_many(:ceramic_types).through(:archeological_sites_ceramic_types) }
+  it { should have_many(:ceramic_diagnostics).through(:archeological_sites_ceramic_diagnostics) }
+  it { should have_many(:previous_works).through(:archeological_sites_previous_works) }
+  it { should have_many(:threats).through(:archeological_sites_threats) }
   
   it { should have_many :maps }
   it { should have_many :generic_files }

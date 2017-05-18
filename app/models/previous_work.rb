@@ -2,5 +2,6 @@
 
 # Used by ArcheologicalSites
 class PreviousWork < ActiveRecord::Base
-  has_and_belongs_to_many :archeological_sites
+  has_many :archeological_sites_previous_works
+  has_many :archeological_sites, through: :archeological_sites_previous_works
 end
