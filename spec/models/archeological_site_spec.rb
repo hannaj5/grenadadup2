@@ -6,8 +6,8 @@ RSpec.describe ArcheologicalSite, type: :model do
   it { should have_many(:previous_works).through(:archeological_sites_previous_works) }
   it { should have_many(:threats).through(:archeological_sites_threats) }
   
-  it { should have_many :maps }
-  it { should have_many :generic_files }
+  it { should have_many(:maps).dependent(:destroy) }
+  it { should have_many(:generic_files).dependent(:destroy) }
 
   it { should respond_to :site_number }
   it { should respond_to :site_name }
