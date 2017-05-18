@@ -3,7 +3,8 @@ ActiveAdmin.register ArcheologicalSite do
   permit_params :site_number, :site_name, :parish, :latitude, :longitude,
                 :location_description, :recommendations, :summary, :notes, 
                 :references, ceramic_type_ids: [], ceramic_diagnostic_ids: [],
-                threat_ids: [], previous_work_ids: [], maps_attributes: [:file, :name]
+                threat_ids: [], previous_work_ids: [], maps_attributes: [:file, :name],
+                generic_files_attributes: [:file, :name]
                 
   # Invoke the decorator for the class
   decorate_with ArcheologicalSiteDecorator
@@ -29,6 +30,9 @@ ActiveAdmin.register ArcheologicalSite do
     end
     column 'Previous Work' do |site|
       site.previous_works_to_s
+    end
+    column 'Maps' do |site|
+      site.maps.count
     end
     column :summary
     column :notes

@@ -15,8 +15,8 @@ class ArcheologicalSite < ActiveRecord::Base
   has_many :archeological_sites_threats
   has_many :threats, through: :archeological_sites_threats
   
-  has_many :maps
-  has_many :generic_files
+  has_many :maps, dependent: :destroy
+  has_many :generic_files, dependent: :destroy
   
   accepts_nested_attributes_for :maps
   accepts_nested_attributes_for :generic_files
