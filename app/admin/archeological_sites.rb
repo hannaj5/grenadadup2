@@ -1,9 +1,9 @@
 ActiveAdmin.register ArcheologicalSite do
   
   permit_params :site_number, :site_name, :parish, :latitude, :longitude,
-                :location_description, :recommendations, :summary, :notes,
+                :location_description, :recommendations, :summary, :notes, 
                 :references, ceramic_type_ids: [], ceramic_diagnostic_ids: [],
-                threat_ids: [], previous_work_ids: []
+                threat_ids: [], previous_work_ids: [], maps_attributes: [:file, :name]
                 
   # Invoke the decorator for the class
   decorate_with ArcheologicalSiteDecorator
@@ -50,7 +50,7 @@ ActiveAdmin.register ArcheologicalSite do
   filter :references
   
   
-  form do |f|
+  form(:html => { :multipart => true }) do |f|
     f.semantic_errors
     f.actions
     f.inputs 'Archeological Site' do
@@ -64,6 +64,10 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :threats, as: :check_boxes
       f.input :previous_works, as: :select, input_html: {multiple: true}
       f.input :location_description, label: 'Description'
+      f.has_many :maps, allow_destroy: true do |m|
+        m.input :name
+        m.input :file, as: :file
+      end
       f.input :recommendations
       f.input :summary
       f.input :notes
