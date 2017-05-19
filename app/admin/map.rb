@@ -12,7 +12,34 @@ ActiveAdmin.register Map do
 #   permitted
 # end
 
- permit_params :name, :file, :archeological_site_id
+  permit_params :name, :file, :archeological_site_id
+  
+  show title: :name do
+    panel 'Map' do
+      image_tag resource.file.url
+    end
+  end
+   
+  sidebar "Map Details", only: :show do
+    attributes_table_for resource do
+      
+      row ('Map Name') { |map| map.name }
+      row ('Description') { |map| map.description }
+      
+      if resource.file.file
+        dims =  "#{resource.width}px X #{resource.height}px" 
+      else
+        dims = ''
+      end
+      
+      row ('Dimensions (width X height)') { dims }
+
+      
+      row 'File Size' do |map|
+        number_to_human_size(map.file.size)
+      end
+    end
+  end
     
 
 end
