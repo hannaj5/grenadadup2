@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519155745) do
+ActiveRecord::Schema.define(version: 20170519190929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,9 +76,12 @@ ActiveRecord::Schema.define(version: 20170519155745) do
 
   create_table "ceramic_diagnostics", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
+
+  add_index "ceramic_diagnostics", ["description"], name: "index_ceramic_diagnostics_on_description", using: :btree
 
   create_table "ceramic_types", force: :cascade do |t|
     t.string   "name"
