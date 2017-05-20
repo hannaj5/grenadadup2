@@ -12,5 +12,16 @@ ActiveAdmin.register GenericFile do
 #   permitted
 # end
  permit_params :name, :file, :archeological_site_id
+ 
+ 
+  
+  controller do
+    
+    # Gives us authenticate_user_access! method
+    include ActiveAdmin::AccessControl
+    
+    before_action -> { authenticate_user_access!(:admin) }
+  
+  end
 
 end

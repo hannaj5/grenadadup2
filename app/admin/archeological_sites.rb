@@ -3,8 +3,8 @@ ActiveAdmin.register ArcheologicalSite do
   permit_params :site_number, :site_name, :parish, :latitude, :longitude,
                 :location_description, :recommendations, :summary, :notes, 
                 :references, ceramic_type_ids: [], ceramic_diagnostic_ids: [],
-                threat_ids: [], previous_work_ids: [], maps_attributes: [:file, :name],
-                generic_files_attributes: [:file, :name]
+                threat_ids: [], previous_work_ids: [], maps_attributes: [:id, :file, :name, :_destroy],
+                generic_files_attributes: [:id, :file, :name, :_destroy]
                 
   # Invoke the decorator for the class
   decorate_with ArcheologicalSiteDecorator
@@ -21,9 +21,12 @@ ActiveAdmin.register ArcheologicalSite do
         "#{site.latitude.round(2)}, #{site.longitude.round(2)}"
       end
     end
+    
+    # 
     column 'Description' do |site| 
       truncate(site.location_description)
     end
+    
     # Took these out to clear up the table.
     # Left the filters and they are in the show.
     # column 'Ceramic Types' do |site|
@@ -38,9 +41,7 @@ ActiveAdmin.register ArcheologicalSite do
     # column 'Previous Work' do |site|
     #   site.previous_works_to_s
     # end
-    column 'Maps' do |site|
-      site.maps.count
-    end
+    
     column 'Generic Files' do |site|
       site.generic_files.count
     end
@@ -96,6 +97,9 @@ ActiveAdmin.register ArcheologicalSite do
       end
     end
     
+   panel 'Files' do
+   end
+    
     # ink_to image_tag("Search.png", border: 0), {action: 'search', controller: 'pages'}, {class: 'dock-item'}
     
     
@@ -103,7 +107,7 @@ ActiveAdmin.register ArcheologicalSite do
   
   sidebar "Details", only: :show do
     attributes_table_for resource do
-      row :site_number
+      row ('Site ID') { |site| site.site_number }
       row :site_name
       row :parish
       if current_user && current_user.can_be_user?

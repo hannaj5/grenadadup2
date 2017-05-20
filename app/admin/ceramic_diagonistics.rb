@@ -7,6 +7,7 @@ ActiveAdmin.register CeramicDiagnostic do
   index do
     id_column
     column :name
+    column :description
     actions
   end
   
@@ -17,6 +18,7 @@ ActiveAdmin.register CeramicDiagnostic do
     f.semantic_errors
     f.inputs do
       input :name
+      input :description
     end
     f.actions
   end
