@@ -11,7 +11,7 @@ ActiveAdmin.register GenericFile do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
- permit_params :name, :file, :archeological_site_id
+ permit_params :name, :file, :description, :archeological_site_id
  
  
   

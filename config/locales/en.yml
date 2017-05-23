@@ -20,5 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  map:
+    destroy: 'Are you sure you want to delete this map?'
+  generic_file:
+    destroy: 'Are you sure you want to delete this file?'
 
