@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519190929) do
+ActiveRecord::Schema.define(version: 20170520181650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,13 +82,16 @@ ActiveRecord::Schema.define(version: 20170519190929) do
   end
 
   add_index "ceramic_diagnostics", ["description"], name: "index_ceramic_diagnostics_on_description", using: :btree
+  add_index "ceramic_diagnostics", ["name"], name: "index_ceramic_diagnostics_on_name", using: :btree
 
   create_table "ceramic_types", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
 
+  add_index "ceramic_types", ["description"], name: "index_ceramic_types_on_description", using: :btree
   add_index "ceramic_types", ["name"], name: "index_ceramic_types_on_name", using: :btree
 
   create_table "ceramic_typologies", force: :cascade do |t|
@@ -104,7 +107,11 @@ ActiveRecord::Schema.define(version: 20170519190929) do
     t.integer  "archeological_site_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.text     "description"
   end
+
+  add_index "generic_files", ["description"], name: "index_generic_files_on_description", using: :btree
+  add_index "generic_files", ["name"], name: "index_generic_files_on_name", using: :btree
 
   create_table "maps", force: :cascade do |t|
     t.string   "name"
@@ -118,18 +125,27 @@ ActiveRecord::Schema.define(version: 20170519190929) do
   end
 
   add_index "maps", ["description"], name: "index_maps_on_description", using: :btree
+  add_index "maps", ["name"], name: "index_maps_on_name", using: :btree
 
   create_table "previous_works", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
+
+  add_index "previous_works", ["description"], name: "index_previous_works_on_description", using: :btree
+  add_index "previous_works", ["name"], name: "index_previous_works_on_name", using: :btree
 
   create_table "threats", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
+
+  add_index "threats", ["description"], name: "index_threats_on_description", using: :btree
+  add_index "threats", ["name"], name: "index_threats_on_name", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

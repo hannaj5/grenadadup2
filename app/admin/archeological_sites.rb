@@ -3,8 +3,9 @@ ActiveAdmin.register ArcheologicalSite do
   permit_params :site_number, :site_name, :parish, :latitude, :longitude,
                 :location_description, :recommendations, :summary, :notes, 
                 :references, ceramic_type_ids: [], ceramic_diagnostic_ids: [],
-                threat_ids: [], previous_work_ids: [], maps_attributes: [:id, :file, :name, :_destroy],
-                generic_files_attributes: [:id, :file, :name, :_destroy]
+                threat_ids: [], previous_work_ids: [], 
+                maps_attributes: [:id, :file, :name, :description, :_destroy],
+                generic_files_attributes: [:id, :file, :name, :description, :_destroy]
                 
   # Invoke the decorator for the class
   decorate_with ArcheologicalSiteDecorator
@@ -79,12 +80,12 @@ ActiveAdmin.register ArcheologicalSite do
         end
         
         column 'Map Name' do |map|
-          link_to map.name, admin_map_path(map)
+          link_to truncate(map.name), admin_map_path(map)
         end
         
         column 'Description' do |map|
           # truncate(map.description)
-          map.description
+          truncate(map.description)
         end
         
         column 'Dimensions (width X height)' do |map|
@@ -94,11 +95,53 @@ ActiveAdmin.register ArcheologicalSite do
         column 'File Size' do |map|
           number_to_human_size(map.file.size)
         end
+        
+        column '' do |map|
+          
+          links = [link_to('View', admin_map_path(map), class: 'view_link member_link')]
+          if current_user && current_user.can_be_editor?
+            links << link_to('Edit', edit_admin_map_path(map), class: 'edit_link member_link')
+            links << link_to('Delete', delete_map_admin_archeological_site_path(map_id: map.id), method: :delete, data: { confirm: t('map.destroy') }, class: 'delete_link member_link')
+          end
+          div class: 'table_actions' do
+          end
+          links.join('&nbsp;').html_safe
+        end
       end
     end
     
-   panel 'Files' do
-   end
+  panel 'Files' do
+      table_for resource.generic_files do
+        column '' do |generic_file|
+          link_to generic_file.name, admin_generic_file_path(generic_file)
+        end
+        
+        column 'File Name' do |generic_file|
+          link_to generic_file.name, admin_map_path(generic_file)
+        end
+        
+        column 'Description' do |generic_file|
+          # truncate(map.description)
+          generic_file.description
+        end
+        
+        column 'File Size' do |generic_file|
+          number_to_human_size(generic_file.file.size)
+        end
+        
+        column '' do |generic_file|
+          
+          div class: 'table_actions' do
+            links = [link_to('View', admin_map_path(generic_file), class: 'view_link member_link')]
+            if current_user && current_user.can_be_editor?
+              links << link_to('Edit', edit_admin_map_path(generic_file), class: 'edit_link member_link')
+              links << link_to('Delete', delete_generic_file_admin_archeological_site_path(generic_file_id: generic_file.id), method: :delete, data: { confirm: t('generic_file.destroy') }, class: 'delete_link member_link')
+            end
+            links.join('&nbsp;').html_safe
+        end
+      end
+    end
+  end
     
     # ink_to image_tag("Search.png", border: 0), {action: 'search', controller: 'pages'}, {class: 'dock-item'}
     
@@ -143,10 +186,12 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :location_description, label: 'Description'
       f.has_many :maps, allow_destroy: true do |m|
         m.input :name
+        m.input :description
         m.input :file, as: :file
       end
       f.has_many :generic_files, allow_destroy: true do |m|
         m.input :name
+        m.input :description
         m.input :file, as: :file
       end
       f.input :recommendations
@@ -155,6 +200,19 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :references
     end
     f.actions
+  end
+  
+  member_action :delete_map, method: :delete do
+    map = Map.find(params[:map_id])
+    map.destroy
+    redirect_to admin_archeological_site_path(params[:id])
+  end
+  
+    
+  member_action :delete_generic_file, method: :delete do
+    generic_file = GenericFile.find(params[:generic_file_id])
+    generic_file.destroy
+    redirect_to admin_archeological_site_path(params[:id])
   end
   
  

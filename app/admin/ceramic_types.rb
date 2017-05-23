@@ -2,7 +2,7 @@ ActiveAdmin.register CeramicType do
   actions :all, except: [:show]
   menu :if => proc{ current_user && current_user.can_be_admin? }
   
-  permit_params :name
+  permit_params :name, :description
   
   index do
     id_column
