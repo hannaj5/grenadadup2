@@ -70,77 +70,82 @@ ActiveAdmin.register ArcheologicalSite do
   
   show title: :site_name do
     panel 'Maps' do
-      table_for resource.maps do
-        column '' do |map|
-          if map.file.file
-            link_to image_tag(map.file.thumb.url, alt: map.name), admin_map_path(map)
-          else
-            link_to image_tag('no-image_thumb.png'), admin_map_path(map)
+      paginated_collection(resource.maps.page(params[:maps_page]).per(15), param_name: 'maps_page') do
+        table_for collection do 
+          column '' do |map|
+            if map.file.file
+              link_to image_tag(map.file.thumb.url, alt: map.name), admin_map_path(map)
+            else
+              link_to image_tag('no-image_thumb.png'), admin_map_path(map)
+            end
           end
-        end
-        
-        column 'Map Name' do |map|
-          link_to truncate(map.name), admin_map_path(map)
-        end
-        
-        column 'Description' do |map|
-          # truncate(map.description)
-          truncate(map.description)
-        end
-        
-        column 'Dimensions (width X height)' do |map|
-          "#{map.width}px X #{map.height}px" if map.file.file
-        end
-        
-        column 'File Size' do |map|
-          number_to_human_size(map.file.size)
-        end
-        
-        column '' do |map|
           
-          links = [link_to('View', admin_map_path(map), class: 'view_link member_link')]
-          if current_user && current_user.can_be_editor?
-            links << link_to('Edit', edit_admin_map_path(map), class: 'edit_link member_link')
-            links << link_to('Delete', delete_map_admin_archeological_site_path(map_id: map.id), method: :delete, data: { confirm: t('map.destroy') }, class: 'delete_link member_link')
+          column 'Map Name' do |map|
+            link_to truncate(map.name), admin_map_path(map)
           end
-          div class: 'table_actions' do
-          end
-          links.join('&nbsp;').html_safe
-        end
-      end
-    end
-    
-  panel 'Files' do
-      table_for resource.generic_files do
-        column '' do |generic_file|
-          link_to generic_file.name, admin_generic_file_path(generic_file)
-        end
-        
-        column 'File Name' do |generic_file|
-          link_to generic_file.name, admin_map_path(generic_file)
-        end
-        
-        column 'Description' do |generic_file|
-          # truncate(map.description)
-          generic_file.description
-        end
-        
-        column 'File Size' do |generic_file|
-          number_to_human_size(generic_file.file.size)
-        end
-        
-        column '' do |generic_file|
           
-          div class: 'table_actions' do
-            links = [link_to('View', admin_map_path(generic_file), class: 'view_link member_link')]
+          column 'Description' do |map|
+            # truncate(map.description)
+            truncate(map.description)
+          end
+          
+          column 'Dimensions (width X height)' do |map|
+            "#{map.width}px X #{map.height}px" if map.file.file
+          end
+          
+          column 'File Size' do |map|
+            number_to_human_size(map.file.size)
+          end
+          
+          column '' do |map|
+            
+            links = [link_to('View', admin_map_path(map), class: 'view_link member_link')]
             if current_user && current_user.can_be_editor?
-              links << link_to('Edit', edit_admin_map_path(generic_file), class: 'edit_link member_link')
-              links << link_to('Delete', delete_generic_file_admin_archeological_site_path(generic_file_id: generic_file.id), method: :delete, data: { confirm: t('generic_file.destroy') }, class: 'delete_link member_link')
+              links << link_to('Edit', edit_admin_map_path(map), class: 'edit_link member_link')
+              links << link_to('Delete', delete_map_admin_archeological_site_path(map_id: map.id), method: :delete, data: { confirm: t('map.destroy') }, class: 'delete_link member_link')
+            end
+            div class: 'table_actions' do
             end
             links.join('&nbsp;').html_safe
-        end
-      end
-    end
+          end
+          
+        end # table_for
+      end # paginated_collection for maps
+    end  # panel 'Maps'
+    
+    panel 'Files' do
+      paginated_collection(resource.generic_files.page(params[:files_page]).per(15), param_name: 'files_page') do
+        table_for collection do 
+          column '' do |generic_file|
+            link_to generic_file.name, admin_generic_file_path(generic_file)
+          end
+            
+          column 'File Name' do |generic_file|
+            link_to generic_file.name, admin_map_path(generic_file)
+          end
+            
+          column 'Description' do |generic_file|
+            # truncate(map.description)
+            generic_file.description
+          end
+            
+          column 'File Size' do |generic_file|
+            number_to_human_size(generic_file.file.size)
+          end
+            
+          column '' do |generic_file|
+            
+            div class: 'table_actions' do
+              links = [link_to('View', admin_map_path(generic_file), class: 'view_link member_link')]
+              if current_user && current_user.can_be_editor?
+                links << link_to('Edit', edit_admin_map_path(generic_file), class: 'edit_link member_link')
+                links << link_to('Delete', delete_generic_file_admin_archeological_site_path(generic_file_id: generic_file.id), method: :delete, data: { confirm: t('generic_file.destroy') }, class: 'delete_link member_link')
+              end
+              links.join('&nbsp;').html_safe
+          end
+        end # table_for files
+      end # paginatied_collection for files
+    end # panel 'Files'
   end
     
     # ink_to image_tag("Search.png", border: 0), {action: 'search', controller: 'pages'}, {class: 'dock-item'}
