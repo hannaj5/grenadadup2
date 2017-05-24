@@ -15,6 +15,13 @@ ActiveAdmin.register Map do
   permit_params :name, :file, :description, :archeological_site_id
   
   index do
+    column '' do |map|
+      if map.file.file
+        link_to image_tag(map.file.thumb.url, alt: map.name), admin_map_path(map)
+      else
+        link_to image_tag('no-image_thumb.png'), admin_map_path(map)
+      end
+    end
     column :name
     column 'Description' do |map|
       truncate(map.description)
