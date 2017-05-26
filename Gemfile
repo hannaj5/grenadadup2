@@ -29,7 +29,7 @@ gem 'draper'
 # Authentication
 gem 'devise'
 
-#Authorization
+# Authorization
 gem 'pundit'
 
 # Active admin easy web pages
@@ -69,7 +69,7 @@ group :test, :development do
   gem 'spring-commands-rspec', group: :development
 end
 
-# Installed outside of environments to allow access in production. 
+# Installed outside of environments to allow access in production.
 # If you don't want this just put it
 # in group :development, :test
 gem 'factory_girl_rails'                  # Creates factories for models
@@ -79,7 +79,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
-  # Spring speeds up development by keeping your application running in the 
+  # Spring speeds up development by keeping your application running in the
   # background. Read     more:         https://github.com/rails/spring
   gem 'spring'
 end

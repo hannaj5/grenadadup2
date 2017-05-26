@@ -1,23 +1,25 @@
 ActiveAdmin.register Map do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  # See permitted parameters documentation:
+  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
+  #
+  # permit_params :list, :of, :attributes, :on, :model
+  #
+  # or
+  #
+  # permit_params do
+  #   permitted = [:permitted, :attributes]
+  #   permitted << :other if params[:action] == 'create' && current_user.admin?
+  #   permitted
+  # end
 
   permit_params :name, :file, :description, :archeological_site_id
-  
+
   index do
     column '' do |map|
       if map.file.file
-        link_to image_tag(map.file.thumb.url, alt: map.name), admin_map_path(map)
+        link_to image_tag(
+          map.file.thumb.url, alt: map.name
+        ), admin_map_path(map)
       else
         link_to image_tag('no-image_thumb.png'), admin_map_path(map)
       end
@@ -35,61 +37,62 @@ ActiveAdmin.register Map do
       link_to('Download', download_admin_map_path(map))
     end
   end
-  
+
   show title: :name do
     panel 'Map' do
       image_tag resource.file.url
     end
   end
-  
-  
-  
-  form title: :name, :html => { :multipart => true } do |f|
+
+  form title: :name, html: { multipart: true } do |f|
     f.semantic_errors
     f.actions
     f.inputs 'Map Details' do
       f.input :name
-      f.input :archeological_site, 
-        as: :select, 
-        collection: Hash[ArcheologicalSite.all.collect { |site| [site.site_name, site.id] } ]
+      f.input :archeological_site,
+              as: :select,
+              collection: Hash[ArcheologicalSite.all.collect do |site|
+                                 [site.site_name, site.id]
+                               end
+              ]
       f.input :file
       f.input :description
     end
     f.actions
   end
-   
-  sidebar "Map Details", only: :show do
-    attributes_table_for resource do
-      
-      row ('Map Name') { |map| map.name }
-      row ('Description') { |map| map.description }
-      
-      if resource.file.file
-        dims =  "#{resource.width}px X #{resource.height}px" 
-      else
-        dims = ''
-      end
-      
-      row ('Dimensions (width X height)') { dims }
 
-      
+  sidebar 'Map Details', only: :show do
+    attributes_table_for resource do
+      row 'Map Name', &:name
+      row 'Description', &:description
+
+      dims = if resource.file.file
+               "#{resource.width}px X #{resource.height}px"
+             else
+               ''
+             end
+
+      row 'Dimensions (width X height)' do
+        dims
+      end
+
       row 'File Size' do |map|
         number_to_human_size(map.file.size)
       end
     end
   end
-  
+
   action_item :foo, only: :show do
     link_to 'Download', download_admin_map_path(resource)
   end
-  
+
   member_action :download, method: :get do
     map = Map.find params[:id]
     if map.file.file
       download = open(map.file.path)
-      send_data download.read, :filename => map.file.file.filename, :type => map.file.content_type, :disposition => "attachment"
+      send_data download.read,
+                filename: map.file.file.filename,
+                type: map.file.content_type, disposition: 'attachment'
     end
   end
-    
-
 end
