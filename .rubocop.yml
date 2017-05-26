@@ -6,3 +6,10 @@ AllCops:
     - 'spec/*_helper.rb'
     - 'spec/support/database_cleaner.rb'
     - 'Gemfile*'
+Metrics/BlockLength:
+ Enabled: true
+ Exclude: 
+    - 'spec/**/*'
+    - 'app/admin/**/*'
+Style/ClassAndModuleChildren:
+  Enabled: false
