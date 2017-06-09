@@ -1,0 +1,7 @@
+<%= semantic_form_for @site_file, url: upload_csv_admin_archeological_sites_path, html: {method: :post} do |form| %>
+  <%= form.semantic_errors %>
+  <%= form.inputs do %>
+    <%= form.input :file %>
+  <% end %>
+  <%= form.actions %>
+<% end %>

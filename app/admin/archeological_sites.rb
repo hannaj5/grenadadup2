@@ -28,7 +28,7 @@ ActiveAdmin.register ArcheologicalSite do
     # Use this test to limit access to certain information.
     if current_user && current_user.can_be_user?
       column 'Coordinates (lat, long)' do |site|
-        "#{site.latitude.round(2)}, #{site.longitude.round(2)}"
+        site.coordinates
       end
     end
 
@@ -230,6 +230,13 @@ ActiveAdmin.register ArcheologicalSite do
       row :references
     end
   end
+  
+  sidebar 'Upload CSV', 
+          partial: 'csv_upload_form', 
+          priority: 0, 
+          only: :index, 
+          if: proc{ current_user.can_be_editor? }
+
 
   form title: :site_name, html: { multipart: true } do |f|
     f.semantic_errors
@@ -285,6 +292,24 @@ ActiveAdmin.register ArcheologicalSite do
                 disposition: 'attachment'
     end
   end
+  
+  collection_action :upload_csv, method: :post do
+    flash[:notice] = t('archeological_site.csv_file.upload.success')
+    sites_file = SiteFile.new
+    sites_file.file = params[:site_file][:file]
+    sites_file.save
+    UploadCsvJob.perform_later(sites_file.id)
+    redirect_to admin_archeological_sites_path
+  end
+  
+    #   def upload_prevalence_file
+    #   flash[:notice] = "The prevalence file #{params[:prevalence_file][:file].original_filename} has been uploaded and queued for processing."
+    #   prevalence_file = PrevalenceFile.new 
+    #   prevalence_file.file = params[:prevalence_file][:file]
+    #   prevalence_file.save
+    #   prevalence_file.import!
+    #   redirect_to admin_dashboard_path
+    # end
 
   member_action :download_file, method: :get do
     generic_file = GenericFile.find params[:file_id]
@@ -303,6 +328,12 @@ ActiveAdmin.register ArcheologicalSite do
 
     # Add the role required to gain access. Empty means anyone can access.
     before_action -> { authenticate_user_access! }
+    
+    # Need to do this to give the semantic upload form to use.
+    def index
+      @site_file = SiteFile.new
+      super
+    end
 
     # This takes away the buttons and links for things that can change a
     # resource unless the user can be an editor.

@@ -38,6 +38,12 @@ gem 'activeadmin'
 # Uploads
 gem 'carrierwave', '~> 1.0'
 
+# Background processing of various thigns.
+gem 'delayed_job'
+gem 'delayed_job_active_record'
+# Delayed job web interface
+gem 'delayed_job_web'
+
 # Image manipulation
 gem 'mini_magick'
 gem 'rmagick'
