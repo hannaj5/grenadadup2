@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520181650) do
+ActiveRecord::Schema.define(version: 20170609192103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,13 +46,9 @@ ActiveRecord::Schema.define(version: 20170520181650) do
     t.text     "references"
   end
 
-  add_index "archeological_sites", ["location_description"], name: "index_archeological_sites_on_location_description", using: :btree
-  add_index "archeological_sites", ["notes"], name: "index_archeological_sites_on_notes", using: :btree
   add_index "archeological_sites", ["parish"], name: "index_archeological_sites_on_parish", using: :btree
-  add_index "archeological_sites", ["recommendations"], name: "index_archeological_sites_on_recommendations", using: :btree
   add_index "archeological_sites", ["site_name"], name: "index_archeological_sites_on_site_name", using: :btree
   add_index "archeological_sites", ["site_number"], name: "index_archeological_sites_on_site_number", using: :btree
-  add_index "archeological_sites", ["summary"], name: "index_archeological_sites_on_summary", using: :btree
 
   create_table "archeological_sites_ceramic_diagnostics", force: :cascade do |t|
     t.integer "archeological_site_id"
@@ -101,6 +97,22 @@ ActiveRecord::Schema.define(version: 20170520181650) do
     t.datetime "updated_at",            null: false
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "generic_files", force: :cascade do |t|
     t.string   "name"
     t.string   "file"
@@ -136,6 +148,12 @@ ActiveRecord::Schema.define(version: 20170520181650) do
 
   add_index "previous_works", ["description"], name: "index_previous_works_on_description", using: :btree
   add_index "previous_works", ["name"], name: "index_previous_works_on_name", using: :btree
+
+  create_table "site_files", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "file"
+  end
 
   create_table "threats", force: :cascade do |t|
     t.string   "name"

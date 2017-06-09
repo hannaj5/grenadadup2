@@ -4,6 +4,14 @@
 # views.
 class ArcheologicalSiteDecorator < Draper::Decorator
   delegate_all
+  
+  def coordinates
+    if self.latitude && self.longitude
+      return "#{self.latitude.round(2)}, #{self.longitude.round(2)}"
+    else
+      return 'NA'
+    end
+  end
 
   def ceramic_types_to_s
     ceramic_types.collect(&:name).join('<br/>').html_safe
