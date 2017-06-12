@@ -29,9 +29,6 @@ class ArcheologicalSiteDecorator < Draper::Decorator
     previous_works.collect(&:name).join('<br/>').html_safe
   end
 
-  def formatted_coordinates
-    "#{longitude.round(2)}, #{latitude.round(2)}"
-  end
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
