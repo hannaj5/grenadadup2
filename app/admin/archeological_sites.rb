@@ -78,6 +78,12 @@ ActiveAdmin.register ArcheologicalSite do
   filter :references
 
   show title: :site_name do
+    panel 'Summary' do
+      content_tag :p, resource.summary
+    end
+    panel 'Recommendations' do
+      content_tag :p, resource.recommendations
+    end
     panel 'Maps' do
       paginated_collection(
         resource.maps.page(
@@ -218,14 +224,15 @@ ActiveAdmin.register ArcheologicalSite do
       row :site_name
       row :parish
       if current_user && current_user.can_be_user?
-        row 'Coordinates (lat, long)', &:formatted_coordinates
+        row 'Coordinates (lat, long)', &:coordinates
       end
       row 'Description', &:location_description
       row 'Ceramic Types', &:ceramic_types_to_s
       row 'Ceramic Diagnostics', &:ceramic_diagnostics_to_s
       row 'Threats', &:threats_to_s
       row 'Previous Work', &:previous_works_to_s
-      row :summary
+      # row :recommendations
+      # row :summary
       row :notes
       row :references
     end
