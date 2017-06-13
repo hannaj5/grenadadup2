@@ -53,7 +53,7 @@ class UploadCsvJob < ActiveJob::Base
   #                             after splitting, default: true
   # @option opts [Symbol|String] :find_by Attribute to search if item exists
   #                             and also the field to insert content on
-  def handle_compound_cell(content, klass_name, _site, opts = {})
+  def handle_compound_cell(content, klass_name, site, opts = {})
     opts = {
       separator: ';',
       strip_whitespace: true,
@@ -61,7 +61,7 @@ class UploadCsvJob < ActiveJob::Base
     }.merge(opts).with_indifferent_access
 
     # Skip empty or nil entries to prevent errors
-    return if content.nill? || content.empyt?
+    return if content.nil? || content.empty?
 
     # Split  the entries and clean them up
     items = content.split(opts[:separator])
@@ -69,10 +69,11 @@ class UploadCsvJob < ActiveJob::Base
 
     # Handle each entry
     items.each do |item|
-      process_entry item, opts[:find_by], klass_name
+      site.send(klass_name.underscore.pluralize) << process_entry(item, opts[:find_by], klass_name)
     end
   end
 
+  # Handles the individual item creating if it does not exist.
   def process_entry(item, find_by, klass_name)
     item_instance = klass_name.constantize.send(
       "find_by_#{find_by}", item
@@ -81,7 +82,7 @@ class UploadCsvJob < ActiveJob::Base
       item_instance = klass_name.constantize
                                 .create find_by.to_sym => item
     end
-    site.send(klass_name.underscore.pluralize) << item_instance
+    item_instance
   end
 
   def create_site(atts)
