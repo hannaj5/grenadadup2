@@ -6,8 +6,10 @@ RSpec.describe PreviousWork, type: :model do
       :archeological_sites
     ).through(:archeological_sites_previous_works)
   }
-  
-  it { should have_many(:archeological_sites_previous_works).dependent(:destroy) }
+
+  it {
+    should have_many(:archeological_sites_previous_works).dependent(:destroy)
+  }
 
   it { should respond_to :name }
 end

@@ -4,12 +4,12 @@
 # views.
 class ArcheologicalSiteDecorator < Draper::Decorator
   delegate_all
-  
+
   def coordinates
-    if self.latitude && self.longitude
-      return "#{self.latitude.round(2)}, #{self.longitude.round(2)}"
+    if latitude && longitude
+      "#{latitude.round(2)}, #{longitude.round(2)}"
     else
-      return 'NA'
+      'NA'
     end
   end
 

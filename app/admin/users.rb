@@ -1,4 +1,6 @@
 ActiveAdmin.register User do
+  include ActiveAdmin::CustomBehavior
+
   menu if: proc { current_user && current_user.can_be_admin? }
 
   permit_params :email, :role
@@ -38,7 +40,12 @@ ActiveAdmin.register User do
       input :email
       input :role
     end
-    f.actions
+    # f.actions
+    f.actions do
+      f.action :submit, label: 'Save'
+      f.action :submit, label: 'Save & New', wrapper_html: { class: ['cancel'] }
+      f.action :cancel, label: 'Cancel', wrapper_html: { class: ['cancel'] }
+    end
   end
 
   controller do

@@ -6,7 +6,7 @@ RSpec.describe Threat, type: :model do
       :archeological_sites
     ).through(:archeological_sites_threats)
   }
-  
+
   it { should have_many(:archeological_sites_threats).dependent(:destroy) }
 
   it { should respond_to :name }

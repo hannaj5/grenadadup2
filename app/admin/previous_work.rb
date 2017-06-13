@@ -1,4 +1,6 @@
 ActiveAdmin.register PreviousWork do
+  include ActiveAdmin::CustomBehavior
+
   actions :all, except: [:show]
   menu if: proc { current_user && current_user.can_be_admin? }
 
@@ -17,7 +19,12 @@ ActiveAdmin.register PreviousWork do
     f.inputs do
       input :name
     end
-    f.actions
+    # f.actions
+    f.actions do
+      f.action :submit, label: 'Save'
+      f.action :submit, label: 'Save & New', wrapper_html: { class: ['cancel'] }
+      f.action :cancel, label: 'Cancel', wrapper_html: { class: ['cancel'] }
+    end
   end
 
   controller do
