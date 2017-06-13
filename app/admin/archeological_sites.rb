@@ -37,26 +37,15 @@ ActiveAdmin.register ArcheologicalSite do
       truncate(site.location_description)
     end
 
-    # Took these out to clear up the table.
-    # Left the filters and they are in the show.
-    # column 'Ceramic Types' do |site|
-    #   site.ceramic_types_to_s
-    # end
-    # column 'Ceramic Diagnostics' do |site|
-    #   site.ceramic_diagnostics_to_s
-    # end
-    # column 'Threats' do |site|
-    #   site.threats_to_s
-    # end
-    # column 'Previous Work' do |site|
-    #   site.previous_works_to_s
-    # end
-
     column 'Generic Files' do |site|
       site.generic_files.count
     end
     column 'Summary' do |site|
       truncate(site.summary)
+    end
+    
+    column 'Versions' do |site|
+      site.versions.size
     end
 
     # column :notes
@@ -212,10 +201,35 @@ ActiveAdmin.register ArcheologicalSite do
               )
               links.join('&nbsp;').html_safe
             end
-          end # table_for files
-        end # paginatied_collection for files
-      end # panel 'Files'
-    end
+          end # column <actions>
+        end # table_for
+      end  # paginatied_collection for files
+    end # panel 'Files'
+    
+    panel 'Versions' do
+      paginated_collection(
+        resource.versions.reverse_order.page(params[:versions_page]).per(10),
+        param_name: 'versions_page',
+        download_links: false
+      ) do
+        table_for collection do
+          column 'Version' do |version|
+            link_to version.index + 1, admin_paper_trail_version_path(version)
+          end
+          column :event
+          column 'Version Author' do |version|
+            if version.version_author
+              User.find(version.version_author.to_i).email
+            else
+              'System'
+            end
+          end
+          column 'When' do |version|
+            version.created_at
+          end
+        end # table_for
+      end # paginated_collection
+    end # panel 'versions'
   end
 
   sidebar 'Details', only: :show do
@@ -231,10 +245,11 @@ ActiveAdmin.register ArcheologicalSite do
       row 'Ceramic Diagnostics', &:ceramic_diagnostics_to_s
       row 'Threats', &:threats_to_s
       row 'Previous Work', &:previous_works_to_s
-      # row :recommendations
-      # row :summary
       row :notes
       row :references
+      row 'Versions' do |site|
+        site.versions.size
+      end
     end
   end
 
@@ -276,7 +291,9 @@ ActiveAdmin.register ArcheologicalSite do
     # f.actions
     f.actions do
       f.action :submit, label: 'Save'
-      f.action :submit, label: 'Save & New', wrapper_html: { class: ['cancel'] }
+      if action_name == 'new'
+        f.action :submit, label: 'Save & New', wrapper_html: { class: ['cancel'] }
+      end
       f.action :cancel, label: 'Cancel', wrapper_html: { class: ['cancel'] }
     end
   end

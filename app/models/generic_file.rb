@@ -2,6 +2,9 @@
 
 # Store various files to be associated with a site.
 class GenericFile < ActiveRecord::Base
+  
+  has_paper_trail
+  
   mount_uploader :file, GenericFileUploader
 
   validates_presence_of :file

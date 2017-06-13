@@ -44,6 +44,10 @@ gem 'delayed_job_active_record'
 # Delayed job web interface
 gem 'delayed_job_web'
 
+# Versioning on models
+gem 'paper_trail'
+gem 'differ'
+
 # Image manipulation
 gem 'mini_magick'
 gem 'rmagick'
