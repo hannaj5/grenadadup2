@@ -2,6 +2,9 @@
 
 # Base model to store information about archeological sites.
 class ArcheologicalSite < ActiveRecord::Base
+  
+  has_paper_trail
+  
   # Destroy the JOIN record but not the record it connects to.
   has_many :archeological_sites_ceramic_types, dependent: :destroy
   has_many :ceramic_types, through: :archeological_sites_ceramic_types
