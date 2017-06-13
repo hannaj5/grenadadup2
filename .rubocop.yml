@@ -11,5 +11,7 @@ Metrics/BlockLength:
  Exclude: 
     - 'spec/**/*'
     - 'app/admin/**/*'
+Metrics/MethodLength:
+  Max: 20
 Style/ClassAndModuleChildren:
   Enabled: false

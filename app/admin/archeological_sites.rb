@@ -1,4 +1,6 @@
 ActiveAdmin.register ArcheologicalSite do
+  include ActiveAdmin::CustomBehavior
+
   permit_params :site_number,
                 :site_name,
                 :parish,
@@ -27,9 +29,7 @@ ActiveAdmin.register ArcheologicalSite do
 
     # Use this test to limit access to certain information.
     if current_user && current_user.can_be_user?
-      column 'Coordinates (lat, long)' do |site|
-        site.coordinates
-      end
+      column 'Coordinates (lat, long)', &:coordinates
     end
 
     #
@@ -237,13 +237,12 @@ ActiveAdmin.register ArcheologicalSite do
       row :references
     end
   end
-  
-  sidebar 'Upload CSV', 
-          partial: 'csv_upload_form', 
-          priority: 0, 
-          only: :index, 
-          if: proc{ current_user.can_be_editor? }
 
+  sidebar 'Upload CSV',
+          partial: 'csv_upload_form',
+          priority: 0,
+          only: :index,
+          if: proc { current_user.can_be_editor? }
 
   form title: :site_name, html: { multipart: true } do |f|
     f.semantic_errors
@@ -274,7 +273,12 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :notes
       f.input :references
     end
-    f.actions
+    # f.actions
+    f.actions do
+      f.action :submit, label: 'Save'
+      f.action :submit, label: 'Save & New', wrapper_html: { class: ['cancel'] }
+      f.action :cancel, label: 'Cancel', wrapper_html: { class: ['cancel'] }
+    end
   end
 
   member_action :delete_map, method: :delete do
@@ -299,7 +303,15 @@ ActiveAdmin.register ArcheologicalSite do
                 disposition: 'attachment'
     end
   end
-  
+
+  collection_action :downlaod_sample_csv, method: :get do
+    sample_file = File.open('public/downloads/example_upload.csv')
+    send_data sample_file.read,
+              filename: sample_file.path.split('/').last,
+              type: 'txt/csv',
+              disposition: 'attachment'
+  end
+
   collection_action :upload_csv, method: :post do
     flash[:notice] = t('archeological_site.csv_file.upload.success')
     sites_file = SiteFile.new
@@ -308,15 +320,6 @@ ActiveAdmin.register ArcheologicalSite do
     UploadCsvJob.perform_later(sites_file.id)
     redirect_to admin_archeological_sites_path
   end
-  
-    #   def upload_prevalence_file
-    #   flash[:notice] = "The prevalence file #{params[:prevalence_file][:file].original_filename} has been uploaded and queued for processing."
-    #   prevalence_file = PrevalenceFile.new 
-    #   prevalence_file.file = params[:prevalence_file][:file]
-    #   prevalence_file.save
-    #   prevalence_file.import!
-    #   redirect_to admin_dashboard_path
-    # end
 
   member_action :download_file, method: :get do
     generic_file = GenericFile.find params[:file_id]
@@ -335,7 +338,7 @@ ActiveAdmin.register ArcheologicalSite do
 
     # Add the role required to gain access. Empty means anyone can access.
     before_action -> { authenticate_user_access! }
-    
+
     # Need to do this to give the semantic upload form to use.
     def index
       @site_file = SiteFile.new

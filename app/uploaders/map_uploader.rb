@@ -40,7 +40,7 @@ class MapUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w(jpg jpeg gif png)
+    %w[jpg jpeg gif png]
   end
 
   # Override the filename of the uploaded files:
@@ -53,10 +53,10 @@ class MapUploader < CarrierWave::Uploader::Base
   private
 
   def store_dimensions
-    get_dimensions if file && model
+    dimensions if file && model
   end
 
-  def get_dimensions
+  def dimensions
     img = ::Magick::Image.read(file.file).first
     model.width = img.columns
     model.height = img.rows
