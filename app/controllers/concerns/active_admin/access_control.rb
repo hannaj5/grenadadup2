@@ -10,8 +10,8 @@ module ActiveAdmin::AccessControl
       true
     else
 
-      redirect_to new_user_session_path unless current_user
-
+      authenticate_user!
+      
       unless current_user.send("can_be_#{access_level}?")
         raise ActionController::RoutingError,
               'Not Found'

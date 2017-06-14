@@ -257,7 +257,7 @@ ActiveAdmin.register ArcheologicalSite do
           partial: 'csv_upload_form',
           priority: 0,
           only: :index,
-          if: proc { current_user.can_be_editor? }
+          if: proc { current_user && current_user.can_be_editor? }
 
   form title: :site_name, html: { multipart: true } do |f|
     f.semantic_errors
