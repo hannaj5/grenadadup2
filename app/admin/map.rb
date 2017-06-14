@@ -96,6 +96,6 @@ ActiveAdmin.register Map do
     # Gives us authenticate_user_access! method
     include ActiveAdmin::AccessControl
 
-    before_action -> { authenticate_user_access!(:admin) }
+    before_action -> { authenticate_user_access!(:admin) }, except: :show
   end
 end
