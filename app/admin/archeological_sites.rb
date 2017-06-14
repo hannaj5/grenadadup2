@@ -36,8 +36,12 @@ ActiveAdmin.register ArcheologicalSite do
     column 'Description' do |site|
       truncate(site.location_description)
     end
+    
+    column 'Maps' do |site|
+      site.maps.count
+    end
 
-    column 'Generic Files' do |site|
+    column 'Files' do |site|
       site.generic_files.count
     end
     column 'Summary' do |site|
@@ -55,8 +59,8 @@ ActiveAdmin.register ArcheologicalSite do
 
   filter :site_number, label: 'Identifier'
   filter :site_name, label: 'Name'
-  filter :latitude
-  filter :longitude
+  filter :latitude,:as => :numeric_range, if: proc { current_user && current_user.can_be_user? }
+  filter :longitude,:as => :numeric_range, if: proc { current_user && current_user.can_be_user? }
   filter :location_description, label: 'Description'
   filter :ceramic_types, as: :check_boxes
   filter :ceramic_diagnostics, as: :check_boxes

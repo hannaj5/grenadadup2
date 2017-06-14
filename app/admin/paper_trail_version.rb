@@ -1,7 +1,7 @@
 ActiveAdmin.register PaperTrail::Version do
-  menu label: 'Versions'
   actions :index, :show
-  menu if: proc { current_user && current_user.can_be_admin? }
+  menu label: 'Versions', if: proc { current_user && current_user.can_be_admin? }
+  decorate_with PaperTrail::VersionDecorator
   
   index title: 'Versions' do
     column 'Version' do |version|
@@ -12,11 +12,7 @@ ActiveAdmin.register PaperTrail::Version do
     end
     column :event
     column 'Version Author' do |version|
-      if version.version_author
-        User.find(version.version_author).email
-      else
-        'System'
-      end
+      version.version_author_name
     end
     column 'When' do |version|
       version.created_at
@@ -30,7 +26,7 @@ ActiveAdmin.register PaperTrail::Version do
       row ('Version ID') { |version| version.id }
       row ('Data Type') { |version| version.item_type }
       row :event
-      row ('Version Author') { |version| User.find(version.whodunnit).email }
+      row ('Version Author') { |version| version.version_author_name }
       row ('Version Date') { |version| version.created_at }
       row ('Changes') { |version| version.decorate.format_diff(:html) }
       row ('Data') { |version| version.decorate.pretty_object(:html) }
@@ -42,7 +38,8 @@ ActiveAdmin.register PaperTrail::Version do
     # Gives us authenticate_user_access! method
     include ActiveAdmin::AccessControl
 
-    before_action -> { authenticate_user_access!(:admin) }
+    before_action -> { authenticate_user_access!(:admin) }, except: :show
+
   end
 
 end

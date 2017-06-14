@@ -2,6 +2,8 @@ ActiveAdmin.register Map do
   include ActiveAdmin::CustomBehavior
 
   permit_params :name, :file, :description, :archeological_site_id
+  
+  menu if: proc { current_user && current_user.can_be_admin? }
 
   index do
     column '' do |map|
@@ -88,5 +90,12 @@ ActiveAdmin.register Map do
                 filename: map.file.file.filename,
                 type: map.file.content_type, disposition: 'attachment'
     end
+  end
+  
+  controller do
+    # Gives us authenticate_user_access! method
+    include ActiveAdmin::AccessControl
+
+    before_action -> { authenticate_user_access!(:admin) }
   end
 end

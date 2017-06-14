@@ -1,5 +1,7 @@
 ActiveAdmin.register GenericFile do
   include ActiveAdmin::CustomBehavior
+  
+  menu label: 'Files', if: proc { current_user && current_user.can_be_admin? }
 
   permit_params :name, :file, :description, :archeological_site_id
 
