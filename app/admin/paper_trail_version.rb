@@ -1,6 +1,7 @@
 ActiveAdmin.register PaperTrail::Version do
   menu label: 'Versions'
   actions :index, :show
+  menu if: proc { current_user && current_user.can_be_admin? }
   
   index title: 'Versions' do
     column 'Version' do |version|
@@ -36,17 +37,12 @@ ActiveAdmin.register PaperTrail::Version do
     end
   end
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+
+  controller do
+    # Gives us authenticate_user_access! method
+    include ActiveAdmin::AccessControl
+
+    before_action -> { authenticate_user_access!(:admin) }
+  end
 
 end
