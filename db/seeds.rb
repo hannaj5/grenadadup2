@@ -92,7 +92,7 @@ if Rails.env.development?
     site.ceramic_types = CeramicType.all.sample(rand(CeramicType.count + 1))
     site.ceramic_diagnostics = CeramicDiagnostic.all.sample(
       rand(CeramicDiagnostic.count + 1))
-    site.previous_work = PreviousWork.all.sample(rand(PreviousWork.count + 1))
+    site.previous_works = PreviousWork.all.sample(rand(PreviousWork.count + 1))
     site.threats = Threat.all.sample(rand(Threat.count + 1))
     site.save
   end
