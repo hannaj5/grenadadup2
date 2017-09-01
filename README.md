@@ -1,1 +1,1 @@
-# This is a really cool archaeological database for Grendada!
+# This is a really cool archaeological database for Grenada!
