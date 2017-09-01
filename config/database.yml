@@ -20,11 +20,9 @@ development:
   database: app_development
 
 test:
-  <<: *default
   #database: grendada_database_test
   database: app_test
 
 production:
-  <<: *default
   #database: grendada_database_production
   database: app_production
