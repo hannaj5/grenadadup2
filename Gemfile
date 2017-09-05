@@ -43,6 +43,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 # Delayed job web interface
 gem 'delayed_job_web'
+gem 'daemons'
 
 # Versioning on models
 gem 'paper_trail'

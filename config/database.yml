@@ -7,12 +7,12 @@
 
 # database.yml
 default: &default
-      adapter: postgresql
-      encoding: unicode
-      pool: 5
-      username: <%= ENV['USERNAME'] %>
-      password: <%= ENV['PASSWORD'] %>
-      host:     <%= ENV['IP'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  host:     <%= ENV['IP'] %>
 
 development:
   <<: *default
@@ -20,9 +20,11 @@ development:
  #database: app_development
 
 test:
+  <<: *default
   database: grendada_database_test
   #database: app_test
 
 production:
+  <<: *default
   database: grendada_database_production
   #database: app_production
