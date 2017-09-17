@@ -108,13 +108,6 @@ ActiveRecord::Schema.define(version: 20170624224103) do
   add_index "ceramic_types", ["description"], name: "index_ceramic_types_on_description", using: :btree
   add_index "ceramic_types", ["name"], name: "index_ceramic_types_on_name", using: :btree
 
-  create_table "ceramic_typologies", force: :cascade do |t|
-    t.integer  "archeological_site_id"
-    t.integer  "ceramic_types_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
