@@ -1,9 +1,43 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
-  <%= link_to 'Go to Database', admin_dashboard_path %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ASIG v2</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Special+Elite"rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+
+  h1 {
+      margin: 10px 30px;
+      text-align: center;
+      letter-spacing: 10px;      
+      font-size: 25px;
+      color: #777;
+      font-family="Special Elite", serif
+  }
+  h3, h4 {
+      text-align: center;
+      letter-spacing: 5px;  
+      font-size: 15px;
+      font-family="Lato", sans serif
+      color: #777;
+  }
+</style>
+</head>
+<body data-offset="50">
+
+<h1>The Archaeological Site Inventory for Grenada (ASIG), v.2 </h1>
+<br>
+ <h3> <%= link_to 'Go to Database', admin_dashboard_path %>
   <br/>
 <% if current_user %>
   <%= link_to 'logout', destroy_user_session_path, method: 'delete' %>
 <% else %>
+<br>
   <%= link_to 'login', new_user_session_path %>
+  </h3>
 <% end %>
