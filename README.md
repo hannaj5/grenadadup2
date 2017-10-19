@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<h1>Coming Soon: Web-database of Archaeological Sites in Grenada!</h1>
-<p>
+<h2>Coming Soon: A Web-database of Archaeological Sites in Grenada!</h2><p>
 THINGS TO DO <br>
 (not in any order) <br>
 <ul>
