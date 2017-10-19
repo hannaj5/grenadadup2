@@ -1,8 +1,8 @@
 
 # This is a really cool archaeological database for Grenada!
 
-THINGS TO DO
-(not in any order)
+#THINGS TO DO
+#(not in any order)
 -add previous/next buttons to site entries (show pages?) for easier navigation 
 -add something to the default Dashboard page [I could not figure this one out]
 	app/admin/dashboard.rb
