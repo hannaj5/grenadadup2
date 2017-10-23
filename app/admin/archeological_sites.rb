@@ -70,12 +70,18 @@ ActiveAdmin.register ArcheologicalSite do
   # filter :notes
   filter :references
 
-  show title: :site_name do
+  show title: :site_name, span: 6 do
+    panel 'Description' do
+      content_tag :p, resource.location_description
+    end
     panel 'Summary' do
       content_tag :p, resource.summary
     end
     panel 'Recommendations' do
       content_tag :p, resource.recommendations
+    end
+    panel 'References' do
+      content_tag :p, resource.references
     end
     panel 'Maps' do
       paginated_collection(
@@ -236,7 +242,7 @@ ActiveAdmin.register ArcheologicalSite do
     end # panel 'versions'
   end
 
-  sidebar 'Details', only: :show do
+  sidebar 'Details', span: 3, only: :show do
     attributes_table_for resource do
       row 'Site ID', &:site_number
       row :site_name
@@ -244,13 +250,13 @@ ActiveAdmin.register ArcheologicalSite do
       if current_user && current_user.can_be_user?
         row 'Coordinates (lat, long)', &:coordinates
       end
-      row 'Description', &:location_description
+      # row 'Description', &:location_description
       row 'Ceramic Types', &:ceramic_types_to_s
       row 'Ceramic Diagnostics', &:ceramic_diagnostics_to_s
       row 'Threats', &:threats_to_s
       row 'Previous Work', &:previous_works_to_s
       row :notes
-      row :references
+      # row :references
       row 'Versions' do |site|
         site.versions.size
       end
