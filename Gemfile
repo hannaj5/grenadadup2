@@ -40,6 +40,7 @@ gem 'carrierwave', '~> 1.0'
 
 # Background processing of various thigns.
 gem 'delayed_job'
+gem 'daemons'
 gem 'delayed_job_active_record'
 # Delayed job web interface
 gem 'delayed_job_web'

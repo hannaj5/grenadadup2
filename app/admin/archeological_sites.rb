@@ -324,13 +324,13 @@ ActiveAdmin.register ArcheologicalSite do
                 disposition: 'attachment'
     end
   end
-
+# send_data file, :type => 'text/csv; charset=iso-8859-1; header=present', :disposition => "attachment;data=#{csv_file}.csv"
   collection_action :downlaod_sample_csv, method: :get do
     sample_file = File.open('public/downloads/example_upload.csv')
     send_data sample_file.read,
               filename: sample_file.path.split('/').last,
               type: 'txt/csv',
-              disposition: 'attachment'
+              disposition: "attachment; data=#{sample_file}.csv"
   end
 
   collection_action :upload_csv, method: :post do
