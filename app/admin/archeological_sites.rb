@@ -72,16 +72,16 @@ ActiveAdmin.register ArcheologicalSite do
 
   show title: :site_name, span: 6 do
     panel 'Description' do
-      content_tag :p, resource.location_description
+      content_tag :p, simple_format(resource.location_description)
     end
     panel 'Summary' do
-      content_tag :p, resource.summary
+      content_tag :p, simple_format(resource.summary)
     end
     panel 'Recommendations' do
-      content_tag :p, resource.recommendations
+      content_tag :p, simple_format(resource.recommendations)
     end
     panel 'References' do
-      content_tag :p, resource.references
+      content_tag :p, simple_format(resource.references)
     end
     panel 'Maps' do
       paginated_collection(
