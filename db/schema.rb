@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613204341) do
+ActiveRecord::Schema.define(version: 20171101172121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,10 @@ ActiveRecord::Schema.define(version: 20170613204341) do
     t.text     "recommendations"
     t.text     "summary"
     t.text     "notes"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.text     "references"
+    t.integer  "representative_image_id"
   end
 
   add_index "archeological_sites", ["parish"], name: "index_archeological_sites_on_parish", using: :btree
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(version: 20170613204341) do
     t.integer  "width"
     t.integer  "height"
     t.text     "description"
+    t.boolean  "representative_image"
   end
 
   add_index "maps", ["description"], name: "index_maps_on_description", using: :btree

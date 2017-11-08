@@ -23,6 +23,15 @@ ActiveAdmin.register ArcheologicalSite do
 
   index do
     selectable_column
+    column '' do |site|
+      map = nil
+      map = site.maps.find(site.representative_image_id) if site.representative_image_id
+      if map
+        link_to image_tag(map.file.thumb.url, alt: map.name.humanize)
+      else
+        image_tag('no-image_thumb.png', alt: 'No reprsentative map provided')
+      end
+    end
     column 'Identifier', :site_number
     column 'Name', :site_name
     column :parish
@@ -71,6 +80,7 @@ ActiveAdmin.register ArcheologicalSite do
   filter :references
 
   show title: :site_name, span: 6 do
+
     panel 'Description' do
       content_tag :p, simple_format(resource.location_description)
     end
@@ -244,6 +254,7 @@ ActiveAdmin.register ArcheologicalSite do
 
   sidebar 'Details', span: 3, only: :show do
     attributes_table_for resource do
+      row '', &:display_representative_image
       row 'Site ID', &:site_number
       row :site_name
       row :parish
