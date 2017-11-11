@@ -11,6 +11,7 @@ ActiveAdmin.register ArcheologicalSite do
                 :summary,
                 :notes,
                 :references,
+                :representative_image_id,
                 ceramic_type_ids: [],
                 ceramic_diagnostic_ids: [],
                 threat_ids: [],
@@ -24,13 +25,7 @@ ActiveAdmin.register ArcheologicalSite do
   index do
     selectable_column
     column '' do |site|
-      map = nil
-      map = site.maps.find(site.representative_image_id) if site.representative_image_id
-      if map
-        link_to image_tag(map.file.thumb.url, alt: map.name.humanize)
-      else
-        image_tag('no-image_thumb.png', alt: 'No reprsentative map provided')
-      end
+      site.decorate.representative_image
     end
     column 'Identifier', :site_number
     column 'Name', :site_name
@@ -254,7 +249,12 @@ ActiveAdmin.register ArcheologicalSite do
 
   sidebar 'Details', span: 3, only: :show do
     attributes_table_for resource do
-      row '', &:display_representative_image
+      row ' ' do |site|
+        site.representative_image
+      end
+      # row '' do |site|
+      #   # site.decorate.representative_image
+      # end
       row 'Site ID', &:site_number
       row :site_name
       row :parish
@@ -293,6 +293,11 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :ceramic_diagnostics, as: :check_boxes
       f.input :threats, as: :check_boxes
       f.input :previous_works, as: :select, input_html: { multiple: true }
+      
+      if f.object.maps.size > 0
+        f.input :representative_image_id, as: :select, include_blank: true, collection:  Hash[f.object.maps.map{|m| [m.name.humanize,m.id]}]
+      end
+      
       f.input :location_description, label: 'Description'
       f.has_many :maps, allow_destroy: true do |m|
         m.input :name
