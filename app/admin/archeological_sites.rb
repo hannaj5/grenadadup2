@@ -70,12 +70,18 @@ ActiveAdmin.register ArcheologicalSite do
   # filter :notes
   filter :references
 
-  show title: :site_name do
+  show title: :site_name, span: 6 do
+    panel 'Description' do
+      content_tag :p, simple_format(resource.location_description)
+    end
     panel 'Summary' do
-      content_tag :p, resource.summary
+      content_tag :p, simple_format(resource.summary)
     end
     panel 'Recommendations' do
-      content_tag :p, resource.recommendations
+      content_tag :p, simple_format(resource.recommendations)
+    end
+    panel 'References' do
+      content_tag :p, simple_format(resource.references)
     end
     panel 'Maps' do
       paginated_collection(
@@ -236,7 +242,7 @@ ActiveAdmin.register ArcheologicalSite do
     end # panel 'versions'
   end
 
-  sidebar 'Details', only: :show do
+  sidebar 'Details', span: 3, only: :show do
     attributes_table_for resource do
       row 'Site ID', &:site_number
       row :site_name
@@ -244,13 +250,13 @@ ActiveAdmin.register ArcheologicalSite do
       if current_user && current_user.can_be_user?
         row 'Coordinates (lat, long)', &:coordinates
       end
-      row 'Description', &:location_description
+      # row 'Description', &:location_description
       row 'Ceramic Types', &:ceramic_types_to_s
       row 'Ceramic Diagnostics', &:ceramic_diagnostics_to_s
       row 'Threats', &:threats_to_s
       row 'Previous Work', &:previous_works_to_s
       row :notes
-      row :references
+      # row :references
       row 'Versions' do |site|
         site.versions.size
       end
@@ -324,13 +330,13 @@ ActiveAdmin.register ArcheologicalSite do
                 disposition: 'attachment'
     end
   end
-
+# send_data file, :type => 'text/csv; charset=iso-8859-1; header=present', :disposition => "attachment;data=#{csv_file}.csv"
   collection_action :downlaod_sample_csv, method: :get do
     sample_file = File.open('public/downloads/example_upload.csv')
     send_data sample_file.read,
               filename: sample_file.path.split('/').last,
               type: 'txt/csv',
-              disposition: 'attachment'
+              disposition: "attachment; data=#{sample_file}.csv"
   end
 
   collection_action :upload_csv, method: :post do
