@@ -33,24 +33,37 @@ ActiveAdmin.register ArcheologicalSite do
     end
 
     #
-    column 'Description' do |site|
-      truncate(site.location_description)
-    end
+    #column 'Description' do |site|
+    #  truncate(site.location_description)
+    #end
     
     column 'Maps' do |site|
       site.maps.count
     end
 
-    column 'Files' do |site|
-      site.generic_files.count
-    end
-    column 'Summary' do |site|
-      truncate(site.summary)
-    end
+#can't get this to display thumbnail
+#    column 'Maps' do |map|
+#      if map.file.file
+#        link_to image_tag(
+#          map.file.thumb.url, alt: map.name
+#           ), admin_map_path(map)
+#      else
+#        link_to image_tag('no-image_thumb.png'), admin_map_path(map)
+#        end
+#    end
+
+
+    # 'Files' do |site|
+    #  site.generic_files.count
+    #end
     
-    column 'Versions' do |site|
-      site.versions.size
-    end
+    #column 'Summary' do |site|
+    #  truncate(site.summary)
+    #end
+    
+    #column 'Versions' do |site|
+    #  site.versions.size
+    #end
 
     # column :notes
     # column :references
@@ -74,15 +87,6 @@ ActiveAdmin.register ArcheologicalSite do
     panel 'Description' do
       content_tag :p, simple_format(resource.location_description)
     end
-    panel 'Summary' do
-      content_tag :p, simple_format(resource.summary)
-    end
-    panel 'Recommendations' do
-      content_tag :p, simple_format(resource.recommendations)
-    end
-    panel 'References' do
-      content_tag :p, simple_format(resource.references)
-    end
     panel 'Maps' do
       paginated_collection(
         resource.maps.page(
@@ -95,64 +99,26 @@ ActiveAdmin.register ArcheologicalSite do
           column '' do |map|
             if map.file.file
               link_to image_tag(
-                map.file.thumb.url, alt: map.name
+                map.file.url, alt: map.name
               ), admin_map_path(map)
             else
               link_to image_tag('no-image_thumb.png'), admin_map_path(map)
             end
           end
-
-          column 'Map Name' do |map|
-            link_to truncate(map.name), admin_map_path(map)
-          end
-
-          column 'Description' do |map|
-            # truncate(map.description)
-            truncate(map.description)
-          end
-
-          column 'Dimensions (width X height)' do |map|
-            "#{map.width}px X #{map.height}px" if map.file.file
-          end
-
-          column 'File Size' do |map|
-            number_to_human_size(map.file.size)
-          end
-
-          column '' do |map|
-            div class: 'table_actions' do
-              links = [
-                link_to(
-                  'View',
-                  admin_map_path(map),
-                  class: 'view_link member_link'
-                )
-              ]
-              if current_user && current_user.can_be_editor?
-                links << link_to(
-                  'Edit',
-                  edit_admin_map_path(map),
-                  class: 'edit_link member_link'
-                )
-                links << link_to(
-                  'Delete',
-                  delete_map_admin_archeological_site_path(map_id: map.id),
-                  method: :delete,
-                  data: { confirm: t('map.destroy') },
-                  class: 'delete_link member_link'
-                )
-              end
-              links << link_to(
-                'Download',
-                download_map_admin_archeological_site_path(map_id: map.id),
-                class: 'download_link member_link'
-              )
-              links.join('&nbsp;').html_safe
-            end
-          end
-        end # table_for
       end # paginated_collection for maps
     end # panel 'Maps'
+  end
+  
+
+    panel 'Summary' do
+      content_tag :p, simple_format(resource.summary)
+    end
+    panel 'Recommendations' do
+      content_tag :p, simple_format(resource.recommendations)
+    end
+    panel 'References' do
+      content_tag :p, simple_format(resource.references)
+    end
 
     panel 'Files' do
       paginated_collection(
