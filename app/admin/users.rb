@@ -3,7 +3,7 @@ ActiveAdmin.register User do
 
   menu if: proc { current_user && current_user.can_be_admin? }
 
-  permit_params :email, :role
+  permit_params :email, :role, :password, :password_confirmation
 
   index do
     selectable_column
@@ -39,6 +39,8 @@ ActiveAdmin.register User do
     f.inputs do
       input :email
       input :role
+      input :password
+      input :password_confirmation
     end
     # f.actions
     f.actions do
