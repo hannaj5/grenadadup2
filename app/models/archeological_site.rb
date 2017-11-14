@@ -24,4 +24,16 @@ class ArcheologicalSite < ActiveRecord::Base
 
   accepts_nested_attributes_for :maps, allow_destroy: true
   accepts_nested_attributes_for :generic_files, allow_destroy: true
+  
+  def next
+    site = ArcheologicalSite.where("id > ?", self.id).first
+    site = ArcheologicalSite.first if site.nil?
+    site
+  end
+  
+  def previous
+    site = ArcheologicalSite.where("id < ?", self.id).last
+    site = ArcheologicalSite.last if site.nil?
+    site
+  end
 end

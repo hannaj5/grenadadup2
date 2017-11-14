@@ -1,5 +1,7 @@
 ActiveAdmin.register ArcheologicalSite do
   include ActiveAdmin::CustomBehavior
+  
+  config.sort_order = 'id_asc'
 
   permit_params :site_number,
                 :site_name,
@@ -24,6 +26,7 @@ ActiveAdmin.register ArcheologicalSite do
 
   index do
     selectable_column
+    column :id
     column '' do |site|
       site.decorate.representative_image
     end
@@ -322,6 +325,14 @@ ActiveAdmin.register ArcheologicalSite do
       end
       f.action :cancel, label: 'Cancel', wrapper_html: { class: ['cancel'] }
     end
+  end
+  
+  action_item :previous, only: [:show, :edit],  :if => proc { archeological_site.previous != nil } do
+    link_to 'Previous', admin_archeological_site_path(archeological_site.previous)
+  end
+  
+  action_item :next, only: [:show, :edit], :if => proc { archeological_site.next != nil } do
+    link_to 'Next', admin_archeological_site_path(archeological_site.next)
   end
 
   member_action :delete_map, method: :delete do
