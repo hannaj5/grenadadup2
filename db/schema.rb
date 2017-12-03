@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170624224103) do
+ActiveRecord::Schema.define(version: 20171101172121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(version: 20170624224103) do
     t.integer  "width"
     t.integer  "height"
     t.text     "description"
-    t.boolean  "representative_image"
   end
 
   add_index "maps", ["description"], name: "index_maps_on_description", using: :btree
