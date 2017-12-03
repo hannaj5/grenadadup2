@@ -59,9 +59,10 @@ ActiveRecord::Schema.define(version: 20170624224103) do
     t.text     "recommendations"
     t.text     "summary"
     t.text     "notes"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.text     "references"
+    t.integer  "representative_image_id"
   end
 
   add_index "archeological_sites", ["parish"], name: "index_archeological_sites_on_parish", using: :btree
@@ -145,6 +146,7 @@ ActiveRecord::Schema.define(version: 20170624224103) do
     t.integer  "width"
     t.integer  "height"
     t.text     "description"
+    t.boolean  "representative_image"
   end
 
   add_index "maps", ["description"], name: "index_maps_on_description", using: :btree

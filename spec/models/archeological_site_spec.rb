@@ -33,4 +33,5 @@ RSpec.describe ArcheologicalSite, type: :model do
   it { should respond_to :recommendations }
   it { should respond_to :summary }
   it { should respond_to :notes }
+  it { should respond_to :representative_image_id }
 end

@@ -1,5 +1,7 @@
 ActiveAdmin.register ArcheologicalSite do
   include ActiveAdmin::CustomBehavior
+  
+  config.sort_order = 'id_asc'
 
   permit_params :site_number,
                 :site_name,
@@ -11,6 +13,7 @@ ActiveAdmin.register ArcheologicalSite do
                 :summary,
                 :notes,
                 :references,
+                :representative_image_id,
                 ceramic_type_ids: [],
                 ceramic_diagnostic_ids: [],
                 threat_ids: [],
@@ -23,6 +26,10 @@ ActiveAdmin.register ArcheologicalSite do
 
   index do
     selectable_column
+    column :id
+    column '' do |site|
+      site.decorate.representative_image
+    end
     column 'Identifier', :site_number
     column 'Name', :site_name
     column :parish
@@ -84,6 +91,7 @@ ActiveAdmin.register ArcheologicalSite do
   filter :references
 
   show title: :site_name, span: 6 do
+
     panel 'Description' do
       content_tag :p, simple_format(resource.location_description)
     end
@@ -210,6 +218,12 @@ ActiveAdmin.register ArcheologicalSite do
 
   sidebar 'Details', span: 3, only: :show do
     attributes_table_for resource do
+      row ' ' do |site|
+        site.representative_image
+      end
+      # row '' do |site|
+      #   # site.decorate.representative_image
+      # end
       row 'Site ID', &:site_number
       row :site_name
       row :parish
@@ -248,6 +262,11 @@ ActiveAdmin.register ArcheologicalSite do
       f.input :ceramic_diagnostics, as: :check_boxes
       f.input :threats, as: :check_boxes
       f.input :previous_works, as: :select, input_html: { multiple: true }
+      
+      if f.object.maps.size > 0
+        f.input :representative_image_id, as: :select, include_blank: true, collection:  Hash[f.object.maps.map{|m| [m.name.humanize,m.id]}]
+      end
+      
       f.input :location_description, label: 'Description'
       f.has_many :maps, allow_destroy: true do |m|
         m.input :name
@@ -272,6 +291,14 @@ ActiveAdmin.register ArcheologicalSite do
       end
       f.action :cancel, label: 'Cancel', wrapper_html: { class: ['cancel'] }
     end
+  end
+  
+  action_item :previous, only: [:show, :edit],  :if => proc { archeological_site.previous != nil } do
+    link_to 'Previous', admin_archeological_site_path(archeological_site.previous)
+  end
+  
+  action_item :next, only: [:show, :edit], :if => proc { archeological_site.next != nil } do
+    link_to 'Next', admin_archeological_site_path(archeological_site.next)
   end
 
   member_action :delete_map, method: :delete do
