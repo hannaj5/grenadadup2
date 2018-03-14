@@ -1,5 +1,5 @@
 class CreateActiveAdminComments < ActiveRecord::Migration
-  drop_table(:active_admin_comments, if_exists: true)
+  # drop_table(:active_admin_comments, if_exists: true)
   def self.up
     create_table :active_admin_comments do |t|
       t.string :namespace

@@ -1,7 +1,7 @@
 ActiveAdmin.register Map do
   include ActiveAdmin::CustomBehavior
 
-  permit_params :name, :file, :description, :archeological_site_id
+  permit_params :name, :file, :description, :archaeological_site_id
   
   menu if: proc { current_user && current_user.can_be_admin? }
 
@@ -40,9 +40,9 @@ ActiveAdmin.register Map do
     f.actions
     f.inputs 'Map Details' do
       f.input :name
-      f.input :archeological_site,
+      f.input :archaeological_site,
               as: :select,
-              collection: Hash[ArcheologicalSite.all.collect do |site|
+              collection: Hash[ArchaeologicalSite.all.collect do |site|
                                  [site.site_name, site.id]
                                end
               ]

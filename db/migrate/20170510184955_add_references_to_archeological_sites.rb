@@ -1,5 +1,5 @@
 class AddReferencesToArcheologicalSites < ActiveRecord::Migration
   def change
-    add_column :archeological_sites, :references, :text
+    add_column :archaeological_sites, :references, :text
   end
 end

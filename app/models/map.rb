@@ -10,5 +10,5 @@ class Map < ActiveRecord::Base
   validates_presence_of :file
   validates_presence_of :name
 
-  belongs_to :archeological_site
+  belongs_to :archaeological_site
 end

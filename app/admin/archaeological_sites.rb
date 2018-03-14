@@ -1,4 +1,4 @@
-ActiveAdmin.register ArcheologicalSite do
+ActiveAdmin.register ArchaeologicalSite do
   include ActiveAdmin::CustomBehavior
   
   config.sort_order = 'id_asc'
@@ -22,7 +22,7 @@ ActiveAdmin.register ArcheologicalSite do
                 generic_files_attributes: %i[id file name description _destroy]
 
   # Invoke the decorator for the class
-  decorate_with ArcheologicalSiteDecorator
+  decorate_with ArchaeologicalSiteDecorator
 
   index do
     selectable_column
@@ -144,7 +144,7 @@ ActiveAdmin.register ArcheologicalSite do
                 )
                 links << link_to(
                   'Delete',
-                  delete_map_admin_archeological_site_path(map_id: map.id),
+                  delete_map_admin_archaeological_site_path(map_id: map.id),
                   method: :delete,
                   data: { confirm: t('map.destroy') },
                   class: 'delete_link member_link'
@@ -152,7 +152,7 @@ ActiveAdmin.register ArcheologicalSite do
               end
               links << link_to(
                 'Download',
-                download_map_admin_archeological_site_path(map_id: map.id),
+                download_map_admin_archaeological_site_path(map_id: map.id),
                 class: 'download_link member_link'
               )
               links.join('&nbsp;').html_safe
@@ -202,7 +202,7 @@ ActiveAdmin.register ArcheologicalSite do
                 )
                 links << link_to(
                   'Delete',
-                  delete_generic_file_admin_archeological_site_path(
+                  delete_generic_file_admin_archaeological_site_path(
                     generic_file_id: generic_file.id
                   ),
                   method: :delete,
@@ -212,7 +212,7 @@ ActiveAdmin.register ArcheologicalSite do
               end
               links << link_to(
                 'Download',
-                download_file_admin_archeological_site_path(
+                download_file_admin_archaeological_site_path(
                   file_id: generic_file.id
                 ),
                 class: 'download_link member_link'
@@ -286,7 +286,7 @@ ActiveAdmin.register ArcheologicalSite do
   form title: :site_name, html: { multipart: true } do |f|
     f.semantic_errors
     f.actions
-    f.inputs 'Archeological Site' do
+    f.inputs 'Archaeological Site' do
       f.input :site_number, label: 'Identifier'
       f.input :site_name, label: 'Name'
       f.input :parish
@@ -327,24 +327,24 @@ ActiveAdmin.register ArcheologicalSite do
     end
   end
   
-  action_item :previous, only: [:show, :edit],  :if => proc { archeological_site.previous != nil } do
-    link_to 'Previous', admin_archeological_site_path(archeological_site.previous)
+  action_item :previous, only: [:show, :edit],  :if => proc { archaeological_site.previous != nil } do
+    link_to 'Previous', admin_archaeological_site_path(archaeological_site.previous)
   end
   
-  action_item :next, only: [:show, :edit], :if => proc { archeological_site.next != nil } do
-    link_to 'Next', admin_archeological_site_path(archeological_site.next)
+  action_item :next, only: [:show, :edit], :if => proc { archaeological_site.next != nil } do
+    link_to 'Next', admin_archaeological_site_path(archaeological_site.next)
   end
 
   member_action :delete_map, method: :delete do
     map = Map.find(params[:map_id])
     map.destroy
-    redirect_to admin_archeological_site_path(params[:id])
+    redirect_to admin_archaeological_site_path(params[:id])
   end
 
   member_action :delete_generic_file, method: :delete do
     generic_file = GenericFile.find(params[:generic_file_id])
     generic_file.destroy
-    redirect_to admin_archeological_site_path(params[:id])
+    redirect_to admin_archaeological_site_path(params[:id])
   end
 
   member_action :download_map, method: :get do
@@ -367,12 +367,12 @@ ActiveAdmin.register ArcheologicalSite do
   end
 
   collection_action :upload_csv, method: :post do
-    flash[:notice] = t('archeological_site.csv_file.upload.success')
+    flash[:notice] = t('archaeological_site.csv_file.upload.success')
     sites_file = SiteFile.new
     sites_file.file = params[:site_file][:file]
     sites_file.save
     UploadCsvJob.perform_later(sites_file.id)
-    redirect_to admin_archeological_sites_path
+    redirect_to admin_archaeological_sites_path
   end
 
   member_action :download_file, method: :get do

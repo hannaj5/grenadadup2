@@ -46,7 +46,7 @@ class UploadCsvJob < ActiveJob::Base
   #
   # @param content [String] the unprocessed cell content
   # @param klass_name [String] the model name of the content being handled
-  # @param site [ArcheologicalSite] the site to which the data should be added.
+  # @param site [ArchaeologicalSite] the site to which the data should be added.
   # @param [Hash] opts
   # @option opts [String] :separator What to split the content on default: ';'
   # @option opts [Boolean] :strip_white_space  Whether to strip whitespace
@@ -86,7 +86,7 @@ class UploadCsvJob < ActiveJob::Base
   end
 
   def create_site(atts)
-    ArcheologicalSite.new(
+    ArchaeologicalSite.new(
       site_number: atts['site_number'],
       site_name: atts['site_name'],
       parish: atts['parish'],
