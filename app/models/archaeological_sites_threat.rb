@@ -2,7 +2,7 @@
 
 # Base model to store a list of possible threats. Essentially a high powered
 # enumeration.
-class ArcheologicalSitesThreat < ActiveRecord::Base
-  belongs_to :archeological_site
+class ArchaeologicalSitesThreat < ActiveRecord::Base
+  belongs_to :archaeological_site
   belongs_to :threat
 end

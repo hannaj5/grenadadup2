@@ -1,5 +1,5 @@
 # Uploader class for Carrierwave to uploade CSV files to bulk populate
-# the ArcheologicalSites
+# the ArchaeologicalSites
 class SiteFileUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -48,4 +48,6 @@ class SiteFileUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  
+  # grep -rnw '/path/to/somewhere/' -e 'pattern'
 end

@@ -3,7 +3,7 @@ ActiveAdmin.register GenericFile do
   
   menu label: 'Files', if: proc { current_user && current_user.can_be_admin? }
 
-  permit_params :name, :file, :description, :archeological_site_id
+  permit_params :name, :file, :description, :archaeological_site_id
 
   index do
     column :name

@@ -62,38 +62,38 @@ if Rails.env.production?
 end
 
 if Rails.env.development? 
-  User.destroy_all
-  FactoryGirl.create :admin, email: 'admin@example.com'
-  FactoryGirl.create :editor, email: 'editor@example.com'
-  FactoryGirl.create :user, email: 'user@example.com'
+  # User.destroy_all
+  # FactoryGirl.create :admin, email: 'admin@example.com'
+  # FactoryGirl.create :editor, email: 'editor@example.com'
+  # FactoryGirl.create :user, email: 'user@example.com'
   
-  FactoryGirl.create_list :editor, 5
-  FactoryGirl.create_list :user, 100
+  # FactoryGirl.create_list :editor, 5
+  # FactoryGirl.create_list :user, 100
   
-  10.times do 
-    PreviousWork.create name: Faker::Name.name
-  end
+  # 10.times do 
+  #   PreviousWork.create name: Faker::Name.name
+  # end
   
-  20.times do
-    site = ArcheologicalSite.new(
-      site_number: Faker::Lorem.characters(10),
-      site_name: Faker::Company.name,
-      parish: Faker::LordOfTheRings.location,
-      latitude: rand() * (90 + 90) - 90,
-      longitude: rand() * (180 + 180) - 180,
-      location_description: Faker::Hipster.paragraph,
-      recommendations: Faker::TwinPeaks.quote,
-      summary: Faker::ChuckNorris.fact,
-      notes: Faker::Lorem.paragraph,
-      references: Faker::Lorem.sentence
+  # 20.times do
+  #   site = ArchaeologicalSite.new(
+  #     site_number: Faker::Lorem.characters(10),
+  #     site_name: Faker::Company.name,
+  #     parish: Faker::LordOfTheRings.location,
+  #     latitude: rand() * (90 + 90) - 90,
+  #     longitude: rand() * (180 + 180) - 180,
+  #     location_description: Faker::Hipster.paragraph,
+  #     recommendations: Faker::TwinPeaks.quote,
+  #     summary: Faker::ChuckNorris.fact,
+  #     notes: Faker::Lorem.paragraph,
+  #     references: Faker::Lorem.sentence
 
-      )
+  #     )
       
-    site.ceramic_types = CeramicType.all.sample(rand(CeramicType.count + 1))
-    site.ceramic_diagnostics = CeramicDiagnostic.all.sample(
-      rand(CeramicDiagnostic.count + 1))
-    site.previous_works = PreviousWork.all.sample(rand(PreviousWork.count + 1))
-    site.threats = Threat.all.sample(rand(Threat.count + 1))
-    site.save
-  end
+  #   site.ceramic_types = CeramicType.all.sample(rand(CeramicType.count + 1))
+  #   site.ceramic_diagnostics = CeramicDiagnostic.all.sample(
+  #     rand(CeramicDiagnostic.count + 1))
+  #   site.previous_works = PreviousWork.all.sample(rand(PreviousWork.count + 1))
+  #   site.threats = Threat.all.sample(rand(Threat.count + 1))
+  #   site.save
+  # end
 end

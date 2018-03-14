@@ -2,7 +2,7 @@
 
 # Stores ceramic types. Provides essentially an enumeration of them
 # with the possibility of description.
-class ArcheologicalSitesCeramicType < ActiveRecord::Base
-  belongs_to :archeological_site
+class ArchaeologicalSitesCeramicType < ActiveRecord::Base
+  belongs_to :archaeological_site
   belongs_to :ceramic_type
 end

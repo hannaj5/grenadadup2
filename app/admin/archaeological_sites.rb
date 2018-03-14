@@ -1,4 +1,8 @@
+<<<<<<< HEAD:app/admin/archeological_sites.rb
 ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
+=======
+ActiveAdmin.register ArchaeologicalSite do
+>>>>>>> 1c186e70eb4ae1a29555d7eddaff36fa5177ea11:app/admin/archaeological_sites.rb
   include ActiveAdmin::CustomBehavior
   
   config.sort_order = 'id_asc'
@@ -22,7 +26,7 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
                 generic_files_attributes: %i[id file name description _destroy]
 
   # Invoke the decorator for the class
-  decorate_with ArcheologicalSiteDecorator
+  decorate_with ArchaeologicalSiteDecorator
 
   index do
     selectable_column
@@ -113,6 +117,59 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
               link_to image_tag('no-image_thumb.png'), admin_map_path(map)
             end
           end
+<<<<<<< HEAD:app/admin/archeological_sites.rb
+=======
+
+          column 'Map Name' do |map|
+            link_to truncate(map.name), admin_map_path(map)
+          end
+
+          column 'Description' do |map|
+            # truncate(map.description)
+            truncate(map.description)
+          end
+
+          column 'Dimensions (width X height)' do |map|
+            "#{map.width}px X #{map.height}px" if map.file.file
+          end
+
+          column 'File Size' do |map|
+            number_to_human_size(map.file.size)
+          end
+
+          column '' do |map|
+            div class: 'table_actions' do
+              links = [
+                link_to(
+                  'View',
+                  admin_map_path(map),
+                  class: 'view_link member_link'
+                )
+              ]
+              if current_user && current_user.can_be_editor?
+                links << link_to(
+                  'Edit',
+                  edit_admin_map_path(map),
+                  class: 'edit_link member_link'
+                )
+                links << link_to(
+                  'Delete',
+                  delete_map_admin_archaeological_site_path(map_id: map.id),
+                  method: :delete,
+                  data: { confirm: t('map.destroy') },
+                  class: 'delete_link member_link'
+                )
+              end
+              links << link_to(
+                'Download',
+                download_map_admin_archaeological_site_path(map_id: map.id),
+                class: 'download_link member_link'
+              )
+              links.join('&nbsp;').html_safe
+            end
+          end
+        end # table_for
+>>>>>>> 1c186e70eb4ae1a29555d7eddaff36fa5177ea11:app/admin/archaeological_sites.rb
       end # paginated_collection for maps
     end # panel 'Maps'
   end
@@ -168,7 +225,7 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
                 )
                 links << link_to(
                   'Delete',
-                  delete_generic_file_admin_archeological_site_path(
+                  delete_generic_file_admin_archaeological_site_path(
                     generic_file_id: generic_file.id
                   ),
                   method: :delete,
@@ -178,7 +235,7 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
               end
               links << link_to(
                 'Download',
-                download_file_admin_archeological_site_path(
+                download_file_admin_archaeological_site_path(
                   file_id: generic_file.id
                 ),
                 class: 'download_link member_link'
@@ -252,7 +309,7 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
   form title: :site_name, html: { multipart: true } do |f|
     f.semantic_errors
     f.actions
-    f.inputs 'Archeological Site' do
+    f.inputs 'Archaeological Site' do
       f.input :site_number, label: 'Identifier'
       f.input :site_name, label: 'Name'
       f.input :parish
@@ -293,24 +350,24 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
     end
   end
   
-  action_item :previous, only: [:show, :edit],  :if => proc { archeological_site.previous != nil } do
-    link_to 'Previous', admin_archeological_site_path(archeological_site.previous)
+  action_item :previous, only: [:show, :edit],  :if => proc { archaeological_site.previous != nil } do
+    link_to 'Previous', admin_archaeological_site_path(archaeological_site.previous)
   end
   
-  action_item :next, only: [:show, :edit], :if => proc { archeological_site.next != nil } do
-    link_to 'Next', admin_archeological_site_path(archeological_site.next)
+  action_item :next, only: [:show, :edit], :if => proc { archaeological_site.next != nil } do
+    link_to 'Next', admin_archaeological_site_path(archaeological_site.next)
   end
 
   member_action :delete_map, method: :delete do
     map = Map.find(params[:map_id])
     map.destroy
-    redirect_to admin_archeological_site_path(params[:id])
+    redirect_to admin_archaeological_site_path(params[:id])
   end
 
   member_action :delete_generic_file, method: :delete do
     generic_file = GenericFile.find(params[:generic_file_id])
     generic_file.destroy
-    redirect_to admin_archeological_site_path(params[:id])
+    redirect_to admin_archaeological_site_path(params[:id])
   end
 
   member_action :download_map, method: :get do
@@ -333,12 +390,12 @@ ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
   end
 
   collection_action :upload_csv, method: :post do
-    flash[:notice] = t('archeological_site.csv_file.upload.success')
+    flash[:notice] = t('archaeological_site.csv_file.upload.success')
     sites_file = SiteFile.new
     sites_file.file = params[:site_file][:file]
     sites_file.save
     UploadCsvJob.perform_later(sites_file.id)
-    redirect_to admin_archeological_sites_path
+    redirect_to admin_archaeological_sites_path
   end
 
   member_action :download_file, method: :get do

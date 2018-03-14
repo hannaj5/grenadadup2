@@ -2,7 +2,7 @@
 
 # Decoroator class for ArcheologicalSite providing displayable content for
 # views.
-class ArcheologicalSiteDecorator < Draper::Decorator
+class ArchaeologicalSiteDecorator < Draper::Decorator
   delegate_all
 
   def coordinates

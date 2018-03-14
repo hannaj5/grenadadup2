@@ -1,8 +1,8 @@
 <%= content_tag :p, 'Download the example file below to ensure correct header format.' %>
-<%= link_to 'Example CSV', downlaod_sample_csv_admin_archeological_sites_path %>
+<%= link_to 'Example CSV', downlaod_sample_csv_admin_archaeological_sites_path %>
 <%= content_tag :br %>
 <%= content_tag :hr %>
-<%= semantic_form_for @site_file, url: upload_csv_admin_archeological_sites_path, html: {method: :post} do |form| %>
+<%= semantic_form_for @site_file, url: upload_csv_admin_archaeological_sites_path, html: {method: :post} do |form| %>
   <%= form.semantic_errors %>
   <%= form.inputs do %>
     <%= form.input :file %>

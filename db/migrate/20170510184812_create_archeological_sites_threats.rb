@@ -1,7 +1,7 @@
 class CreateArcheologicalSitesThreats < ActiveRecord::Migration
   def change
-    create_table :archeological_sites_threats do |t|
-      t.integer :archeological_site_id
+    create_table :archaeological_sites_threats do |t|
+      t.integer :archaeological_site_id
       t.integer :threat_id
     end
   end
