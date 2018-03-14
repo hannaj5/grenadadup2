@@ -32,12 +32,10 @@
 
 <h1>The Archaeological Site Inventory for Grenada (ASIG), v.2 </h1>
 <br>
-<h3>
+<h3> <%= link_to 'GO TO DATABASE', admin_archaeological_sites_path %>
+<br> <br>
 <% if current_user %>
-    <%= link_to 'GO TO DATABASE', admin_archaeological_sites_path %>
-    <br>
-    <br>
-    <%= link_to 'logout', destroy_user_session_path, method: 'delete' %>
+  <%= link_to 'logout', destroy_user_session_path, method: 'delete' %>
 <% else %>
 <br>
   <%= link_to 'login', new_user_session_path %>

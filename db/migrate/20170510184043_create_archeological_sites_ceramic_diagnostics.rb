@@ -1,4 +1,4 @@
-class CreateArcheologicalSitesCeramicDiagnostics < ActiveRecord::Migration
+class CreateArchaeologicalSitesCeramicDiagnostics < ActiveRecord::Migration
   def change
     create_table :archaeological_sites_ceramic_diagnostics do |t|
       t.integer :archaeological_site_id

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ArcheologicalSitesPreviousWork, type: :model do
-  it { should belong_to :archeological_site }
+RSpec.describe ArchaeologicalSitesPreviousWork, type: :model do
+  it { should belong_to :archaeological_site }
   it { should belong_to :previous_work }
 end

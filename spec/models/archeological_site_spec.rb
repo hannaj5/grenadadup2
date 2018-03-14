@@ -1,25 +1,25 @@
 require 'rails_helper'
 
-RSpec.describe ArcheologicalSite, type: :model do
+RSpec.describe ArchaeologicalSite, type: :model do
   it {
     should have_many(
       :ceramic_types
-    ).through(:archeological_sites_ceramic_types)
+    ).through(:archaeological_sites_ceramic_types)
   }
   it {
     should have_many(
       :ceramic_diagnostics
-    ).through(:archeological_sites_ceramic_diagnostics)
+    ).through(:archaeological_sites_ceramic_diagnostics)
   }
   it {
     should have_many(
       :previous_works
-    ).through(:archeological_sites_previous_works)
+    ).through(:archaeological_sites_previous_works)
   }
   it {
     should have_many(
       :threats
-    ).through(:archeological_sites_threats)
+    ).through(:archaeological_sites_threats)
   }
 
   it { should have_many(:maps).dependent(:destroy) }

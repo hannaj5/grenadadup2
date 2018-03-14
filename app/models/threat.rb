@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Used by ArcheologicalSites
+# Used by ArchaeologicalSites
 class Threat < ActiveRecord::Base
   
   has_paper_trail

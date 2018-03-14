@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe ArcheologicalSiteDecorator do
+describe ArchaeologicalSiteDecorator do
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Decoroator class for ArcheologicalSite providing displayable content for
+# Decoroator class for ArchaeologicalSite providing displayable content for
 # views.
 class ArchaeologicalSiteDecorator < Draper::Decorator
   delegate_all
