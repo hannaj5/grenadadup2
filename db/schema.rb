@@ -31,7 +31,25 @@ ActiveRecord::Schema.define(version: 20180314182157) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "archaeological_sites", force: :cascade do |t|
+  create_table "admin_users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "archeological_sites", force: :cascade do |t|
     t.string   "site_number"
     t.string   "site_name"
     t.string   "parish"
@@ -47,27 +65,27 @@ ActiveRecord::Schema.define(version: 20180314182157) do
     t.integer  "representative_image_id"
   end
 
-  add_index "archaeological_sites", ["parish"], name: "index_archaeological_sites_on_parish", using: :btree
-  add_index "archaeological_sites", ["site_name"], name: "index_archaeological_sites_on_site_name", using: :btree
-  add_index "archaeological_sites", ["site_number"], name: "index_archaeological_sites_on_site_number", using: :btree
+  add_index "archeological_sites", ["parish"], name: "index_archeological_sites_on_parish", using: :btree
+  add_index "archeological_sites", ["site_name"], name: "index_archeological_sites_on_site_name", using: :btree
+  add_index "archeological_sites", ["site_number"], name: "index_archeological_sites_on_site_number", using: :btree
 
-  create_table "archaeological_sites_ceramic_diagnostics", force: :cascade do |t|
-    t.integer "archaeological_site_id"
+  create_table "archeological_sites_ceramic_diagnostics", force: :cascade do |t|
+    t.integer "archeological_site_id"
     t.integer "ceramic_diagnostic_id"
   end
 
-  create_table "archaeological_sites_ceramic_types", force: :cascade do |t|
-    t.integer "archaeological_site_id"
+  create_table "archeological_sites_ceramic_types", force: :cascade do |t|
+    t.integer "archeological_site_id"
     t.integer "ceramic_type_id"
   end
 
-  create_table "archaeological_sites_previous_works", force: :cascade do |t|
-    t.integer "archaeological_site_id"
+  create_table "archeological_sites_previous_works", force: :cascade do |t|
+    t.integer "archeological_site_id"
     t.integer "previous_work_id"
   end
 
-  create_table "archaeological_sites_threats", force: :cascade do |t|
-    t.integer "archaeological_site_id"
+  create_table "archeological_sites_threats", force: :cascade do |t|
+    t.integer "archeological_site_id"
     t.integer "threat_id"
   end
 
@@ -110,9 +128,9 @@ ActiveRecord::Schema.define(version: 20180314182157) do
   create_table "generic_files", force: :cascade do |t|
     t.string   "name"
     t.string   "file"
-    t.integer  "archaeological_site_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "archeological_site_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.text     "description"
   end
 
@@ -122,9 +140,9 @@ ActiveRecord::Schema.define(version: 20180314182157) do
   create_table "maps", force: :cascade do |t|
     t.string   "name"
     t.string   "file"
-    t.integer  "archaeological_site_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "archeological_site_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "width"
     t.integer  "height"
     t.text     "description"

@@ -165,7 +165,7 @@ ActiveAdmin.register ArchaeologicalSite do
         end # table_for
       end # paginated_collection for maps
     end # panel 'Maps'
-  end
+  #end
   
 
     panel 'Summary' do
@@ -425,4 +425,4 @@ ActiveAdmin.register ArchaeologicalSite do
       end
     end
   end
-#end
+end
