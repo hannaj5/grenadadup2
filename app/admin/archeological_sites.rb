@@ -1,4 +1,4 @@
-ActiveAdmin.register ArcheologicalSite do
+ActiveAdmin.register ArcheologicalSite,as: "Archaeological Site" do
   include ActiveAdmin::CustomBehavior
   
   config.sort_order = 'id_asc'
