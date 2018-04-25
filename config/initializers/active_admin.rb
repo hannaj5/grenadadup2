@@ -112,7 +112,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-  config.root_to = '/admin/archaeological_sites'
+  config.root_to = 'admin/archaeological_sites#index'
 
   # == Admin Comments
   #
