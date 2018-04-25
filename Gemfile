@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-
+#gem 'sqlite3'
 gem 'pg'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -86,8 +86,10 @@ end
 # Installed outside of environments to allow access in production.
 # If you don't want this just put it
 # in group :development, :test
-gem 'factory_girl_rails'                  # Creates factories for models
+#gem 'factory_girl_rails'                  # Creates factories for models
+gem 'factory_bot'                            #new version of factory_girl
 gem 'faker'                               # Handy for creating fake data
+#gem 'apartment', github: 'vladra/apartment', branch: 'connection_based_threading_fix'  #recommended for ActiveRecord No Connection error
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -96,5 +98,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the
   # background. Read     more:         https://github.com/rails/spring
   gem 'spring'
+
+gem 'rspec'
 end
 

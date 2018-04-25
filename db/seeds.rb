@@ -96,4 +96,5 @@ if Rails.env.development?
   #   site.threats = Threat.all.sample(rand(Threat.count + 1))
   #   site.save
   # end
-endUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+end
+User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
